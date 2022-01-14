@@ -28,7 +28,7 @@ public class AddAction implements Action {
 		vo.setMessage(content);
 		
 		boolean result = dao.insert(vo);
-		System.out.println(result ? "success" : "fail");
+//		System.out.println(result ? "success" : "fail");
 		MvcUtil.redirect(request.getContextPath() + "/guestbook", request, response);
 	}
 }

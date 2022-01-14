@@ -14,7 +14,9 @@ import com.poscoict.web.mvc.ActionFactory;
 public class GuestbookController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, 
+			HttpServletResponse response) 
+					throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		String actionName = request.getParameter("a");
 		
@@ -26,5 +28,4 @@ public class GuestbookController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 }

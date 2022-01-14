@@ -17,8 +17,8 @@ public class DeleteAction implements Action {
 		Long no = Long.parseLong(request.getParameter("no"));
 		String password = request.getParameter("password");
 		GuestbookDao dao = new GuestbookDao();
-		boolean result = new GuestbookDao().delete(no, password);
-		System.out.println(result ? "success" : "fail");
+		boolean result = dao.delete(no, password);
+//		System.out.println(result ? "success" : "fail");
 		MvcUtil.redirect(request.getContextPath() + "/guestbook", request, response);
 	}
 
