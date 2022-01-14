@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!doctype html>
 <html>
 <head>
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link href="/assets/css/board.css" rel="stylesheet" type="text/css">
+<link href="/assets/css/user.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div id="container">
@@ -18,30 +19,17 @@
 			</ul>
 		</div>
 		<div id="content">
-			<div id="board" class="board-form">
-				<table class="tbl-ex">
-					<tr>
-						<th colspan="2">글보기</th>
-					</tr>
-					<tr>
-						<td class="label">제목</td>
-						<td>제목입니다.</td>
-					</tr>
-					<tr>
-						<td class="label">내용</td>
-						<td>
-							<div class="view-content">
-								내용 1입니다.<br>
-								내용 2입니다.<br>
-								내용 3입니다.
-							</div>
-						</td>
-					</tr>
-				</table>
-				<div class="bottom">
-					<a href="">글목록</a>
-					<a href="">글수정</a>
-				</div>
+			<div id="user">
+				<form id="login-form" name="loginform" method="post" action="/user?a=login">
+					<label class="block-label" for="email">이메일</label>
+					<input id="email" name="email" type="text" value="">
+					<label class="block-label" >패스워드</label>
+					<input name="password" type="password" value="">
+					<p>
+						로그인이 실패 했습니다.
+					</p>
+					<input type="submit" value="로그인">
+				</form>
 			</div>
 		</div>
 		<div id="navigation">
