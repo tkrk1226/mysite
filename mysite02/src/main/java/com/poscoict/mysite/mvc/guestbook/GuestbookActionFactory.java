@@ -19,7 +19,7 @@ public class GuestbookActionFactory extends ActionFactory {
 			action = new IndexAction(); 
 		}
 		
-		return null;
+		return action;
 	}
 
 }
