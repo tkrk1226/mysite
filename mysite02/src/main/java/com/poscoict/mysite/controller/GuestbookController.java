@@ -21,8 +21,6 @@ public class GuestbookController extends HttpServlet {
 		ActionFactory af = new GuestbookActionFactory();
 		Action action = af.getAction(actionName);
 		action.execute(request, response);
-
-	
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

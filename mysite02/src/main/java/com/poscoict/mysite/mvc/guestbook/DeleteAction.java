@@ -10,14 +10,16 @@ import com.poscoict.mysite.dao.GuestbookDao;
 import com.poscoict.web.mvc.Action;
 import com.poscoict.web.util.MvcUtil;
 
-public class IndexAction implements Action {
+public class DeleteAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Long no = Long.parseLong(request.getParameter("no"));
+		String password = request.getParameter("password");
 		GuestbookDao dao = new GuestbookDao();
-		request.setAttribute("list", dao.findAll());
-		request.setAttribute("guestCount", dao.cntAll());
-		MvcUtil.forward("guestbook/index", request, response);
+		boolean result = new GuestbookDao().delete(no, password);
+		System.out.println(result ? "success" : "fail");
+		MvcUtil.redirect(request.getContextPath() + "/guestbook", request, response);
 	}
 
 }
