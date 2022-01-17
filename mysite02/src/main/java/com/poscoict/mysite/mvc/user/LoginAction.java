@@ -22,16 +22,18 @@ public class LoginAction implements Action {
 
 		UserVo authUser = new UserDao().findByEmailAndPassword(email, password);
 		
-		if(authUser == null) {
+		if(authUser == null) { // 저장해야할 객체
 			// 이메일 또는 비밀번호가 틀림 ?? 혹은 없는 이메일... -> redirect로 다시 로그인으로 보내거나 ... forwarding도 괜찮음
 			request.setAttribute("result", "fail");
 			request.setAttribute("email", email);
 			MvcUtil.forward("user/loginform", request, response);
 			return; // 이 메서드만 다시 처리하도록...
 		}
-		
-		// 인증처리 (Session 처리)
-		HttpSession session = request.getSession();
-		
+		else {
+			// 인증처리 (Session 처리)
+			HttpSession session = request.getSession(true);
+			session.setAttribute("authUser", authUser);
+			MvcUtil.redirect(request.getContextPath(), request, response);	
+		}		
 	}
 }

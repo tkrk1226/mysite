@@ -114,6 +114,64 @@ public class UserDao {
 		return result;
 	}
 	
+//	public UserVo findByNo(Long no) {
+//
+//		// 처음에는 null 이었지만 select에 있다면 제대로 된 객체를 반환하도록
+//		UserVo result = null;
+//		
+//		Connection conn = null;
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//		
+//		try {
+//			conn = getConnection();
+//			
+//			//3. SQL 준비
+//			String sql = "select no, name from user where email = ? and password = ?";
+//			pstmt = conn.prepareStatement(sql);
+//
+//			//4. 바인딩(binding)	
+//			pstmt.setString(1, email);
+//			pstmt.setString(2, password);
+//			
+//			//5. SQL 실행 , executeQuery는 rs, executeUpdate는 int로 반환한다. 
+//			rs = pstmt.executeQuery();
+//			
+//			if(rs.next()) {
+//				 Long no = rs.getLong(1);
+//				 String name = rs.getString(2);
+//				 
+//				 result = new UserVo();
+//				 result.setNo(no);
+//				 result.setName(name);
+//			}
+//			
+//			//boiler plate code => 상투적인 코드 => 비효율 
+//						
+//		} catch (SQLException e) {
+//			System.out.print("error : " + e); // e.getMessage()
+//		}
+//		
+//		finally {
+//			// 자원 정리 -> try OR catch 둘 다 실행 
+//			try {
+//				if(rs != null) {
+//					rs.close();
+//				}
+//				if(pstmt != null) {
+//					pstmt.close();
+//				}
+//				if(conn != null) {
+//					conn.close();
+//				}
+//			} catch(SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		
+//		return result;
+//	}
+	
 	private Connection getConnection() throws SQLException{
 		Connection conn = null;
 		
@@ -130,4 +188,6 @@ public class UserDao {
 		
 		return conn;
 	}
+
+
 }
