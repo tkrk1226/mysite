@@ -14,9 +14,6 @@ public class JoinSuccessAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		MvcUtil.forward("user/joinsuccess", request, response);
-		
-		
-		
 	}
 
 }

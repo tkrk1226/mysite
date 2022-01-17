@@ -114,63 +114,125 @@ public class UserDao {
 		return result;
 	}
 	
-//	public UserVo findByNo(Long no) {
-//
-//		// 처음에는 null 이었지만 select에 있다면 제대로 된 객체를 반환하도록
-//		UserVo result = null;
-//		
-//		Connection conn = null;
-//		PreparedStatement pstmt = null;
-//		ResultSet rs = null;
-//		
-//		try {
-//			conn = getConnection();
-//			
-//			//3. SQL 준비
-//			String sql = "select no, name from user where email = ? and password = ?";
-//			pstmt = conn.prepareStatement(sql);
-//
-//			//4. 바인딩(binding)	
-//			pstmt.setString(1, email);
-//			pstmt.setString(2, password);
-//			
-//			//5. SQL 실행 , executeQuery는 rs, executeUpdate는 int로 반환한다. 
-//			rs = pstmt.executeQuery();
-//			
-//			if(rs.next()) {
-//				 Long no = rs.getLong(1);
-//				 String name = rs.getString(2);
-//				 
-//				 result = new UserVo();
-//				 result.setNo(no);
-//				 result.setName(name);
-//			}
-//			
-//			//boiler plate code => 상투적인 코드 => 비효율 
-//						
-//		} catch (SQLException e) {
-//			System.out.print("error : " + e); // e.getMessage()
-//		}
-//		
-//		finally {
-//			// 자원 정리 -> try OR catch 둘 다 실행 
-//			try {
-//				if(rs != null) {
-//					rs.close();
-//				}
-//				if(pstmt != null) {
-//					pstmt.close();
-//				}
-//				if(conn != null) {
-//					conn.close();
-//				}
-//			} catch(SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		
-//		return result;
-//	}
+	public boolean update(UserVo vo) {
+		
+		boolean result = false;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection();
+			
+			//3. SQL 준비
+			
+			String sql;
+			
+			if(vo.getPassword() == null) {
+				sql = "update user set name = ?, gender = ? where no = ?";
+			} else {
+				sql = "update user set name = ?, gender = ?, password = ? where no = ?";
+			}
+			
+			pstmt = conn.prepareStatement(sql);
+
+			//4. 바인딩(binding)	
+			pstmt.setString(1, vo.getName());
+			pstmt.setString(2, vo.getGender());
+			if(vo.getPassword() == null) {
+				pstmt.setLong(3, vo.getNo());
+			}
+			else {
+				pstmt.setString(3, vo.getPassword());
+				pstmt.setLong(4, vo.getNo());
+			}
+			
+			//5. SQL 실행 , executeQuery는 rs, executeUpdate는 int로 반환한다. 
+			result = (pstmt.executeUpdate() == 1);
+			
+			//boiler plate code => 상투적인 코드 => 비효율 
+						
+		} catch (SQLException e) {
+			System.out.print("error : " + e); // e.getMessage()
+		}
+		
+		finally {
+			// 자원 정리 -> try OR catch 둘 다 실행 
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+	}
+
+	public UserVo findByNo(Long no) {
+
+		// 처음에는 null 이었지만 select에 있다면 제대로 된 객체를 반환하도록
+		UserVo result = null;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection();
+			
+			//3. SQL 준비
+			String sql = "select name, email, gender from user where no = ?";
+			
+			//4. 바인딩(binding)	
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setLong(1, no);
+			
+			
+			//5. SQL 실행 , executeQuery는 rs, executeUpdate는 int로 반환한다. 
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				 String name = rs.getString(1);
+				 String email = rs.getString(2);
+				 String gender = rs.getString(3);
+				 
+				 result = new UserVo();
+				 result.setNo(no);
+				 result.setName(name);
+				 result.setEmail(email);
+				 result.setGender(gender);
+			}
+			
+			//boiler plate code => 상투적인 코드 => 비효율 
+						
+		} catch (SQLException e) {
+			System.out.print("error : " + e); // e.getMessage()
+		}
+		
+		finally {
+			// 자원 정리 -> try OR catch 둘 다 실행 
+			try {
+				if(rs != null) {
+					rs.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+	}
 	
 	private Connection getConnection() throws SQLException{
 		Connection conn = null;
@@ -188,6 +250,4 @@ public class UserDao {
 		
 		return conn;
 	}
-
-
 }
