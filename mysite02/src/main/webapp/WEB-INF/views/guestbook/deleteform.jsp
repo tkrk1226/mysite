@@ -11,7 +11,7 @@
 		<jsp:include page="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="guestbook" class="delete-form">
-				<form method="post" action="<%= request.getContextPath() %>/guestbook?a=delete">
+				<form method="post" action="<%= request.getContextPath() %>/guestbook">
 					<input type="hidden" name="a" value="delete">
 					<input type='hidden' name="no" value=<%= request.getAttribute("no") %>>
 					<label>비밀번호</label>

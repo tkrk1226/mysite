@@ -21,5 +21,4 @@ public class DeleteAction implements Action {
 //		System.out.println(result ? "success" : "fail");
 		MvcUtil.redirect(request.getContextPath() + "/guestbook", request, response);
 	}
-
 }
