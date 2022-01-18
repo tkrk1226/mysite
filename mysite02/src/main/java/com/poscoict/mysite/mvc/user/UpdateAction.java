@@ -36,7 +36,7 @@ public class UpdateAction implements Action {
 			vo.setNo(authUser.getNo());
 			vo.setName(name);
 //			authUser.setName(name);
-			session.setAttribute("authUser", vo);
+//			session.setAttribute("authUser", vo);
 
 			vo.setGender(gender);
 			if(password.isBlank() == false) {
@@ -44,7 +44,7 @@ public class UpdateAction implements Action {
 			}
 			
 			dao.update(vo);
-
+			authUser.setName(name);
 			// 논리적으로 말이 안되는 상황인데?
 			
 			MvcUtil.redirect(request.getContextPath(), request, response);
