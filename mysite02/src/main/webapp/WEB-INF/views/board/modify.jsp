@@ -27,11 +27,13 @@
 						<tr>
 							<td class="label">내용</td>
 							<td>
-								<textarea id="content" name="content">수정해야 할 글은 고대로 
-이렇게 textarea에 뿌려야 합니다.
-개행문자 변경도 하지마세요.
-하하하하하
-즐건 코딩 되세요~~~~</textarea>
+								<textarea id="content" name="content">
+									수정해야 할 글은 고대로 
+									이렇게 textarea에 뿌려야 합니다.
+									개행문자 변경도 하지마세요.
+									하하하하하
+									즐건 코딩 되세요~~~~
+								</textarea>
 							</td>
 						</tr>
 					</table>
