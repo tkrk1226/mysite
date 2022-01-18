@@ -35,7 +35,7 @@ public class UpdateAction implements Action {
 			
 			vo.setNo(authUser.getNo());
 			vo.setName(name);
-			
+//			authUser.setName(name);
 			session.setAttribute("authUser", vo);
 
 			vo.setGender(gender);
