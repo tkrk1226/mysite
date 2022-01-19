@@ -18,33 +18,63 @@ public class ListAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-//		int pageCount = 10;
-//		int currentPage = 2;
-//		int nextPage = -1; // 없으면 -1
-//		int startPage = 3;
-//		int prePage = 2; // page객체를 만들던지 map에다가 담아놓고 쓰던지 둘 중 하나를 할 것
-//		Map m;
-//		m.put();
-
 		HttpSession session = request.getSession(true);
 		BoardDao dao = new BoardDao();
-		PageVo pageVo = new PageVo();
+		PageVo pageVo = (PageVo)session.getAttribute("page");
+		
+//		if(pageVo == null) {
+			pageVo = new PageVo();	
+//		}
 		
 		String kwd = request.getParameter("kwd");
-		String pageNum = request.getParameter("");
+		String strPageNum = request.getParameter("pageNum");
 		
-		if (kwd == null || kwd.isBlank()) {
-			if (kwd == null) {
-				System.out.println("kwd==null : " + (kwd == null));	
-			} else {
-				System.out.println("kwd.isBlank() : " + kwd.isBlank());
-			}
+		if (kwd != null && (!kwd.isBlank())) {
+			System.out.println(kwd);
+			pageVo.setKeyword(kwd);
 		}
-//		pageCnt , findKwd를 만들어서 2개로 다시 처리한다.
+
+		int boardCount = dao.boardCnt(pageVo.getKeyword());
+		int pageCount = boardCount / pageVo.getPageDivide();
+		if(boardCount % pageVo.getPageDivide() >= 1) {
+			pageCount++;
+		}
 		
-		pageVo.setPageCount(dao.pageCnt(pageVo.getKeyword()));
-		request.setAttribute("list", dao.findKwd(pageVo.getKeyword(), ((pageVo.getStartPage() - 1) * pageVo.getPageDivide()) , pageVo.getPageDivide()));
-//		request.setAttribute("list", dao.findKwd(pageVo.getKeyword(), 0, pageVo.getPageDivide()));
+		pageVo.setBoardCount(boardCount);
+		pageVo.setPageCount(pageCount);
+		
+		if (strPageNum == null) {
+			pageVo.setCurrentPage(1);
+			pageVo.setNextPage(2);
+			pageVo.setPrePage(-1);
+			pageVo.setPageDevideCount(0);
+		} else {
+			int pageNum = Integer.parseInt(strPageNum);
+			
+			if(pageNum > pageVo.getPageCount()) {
+				pageNum = pageVo.getPageCount();
+			}
+
+			pageVo.setCurrentPage(pageNum);
+			
+			if(pageNum == pageVo.getPageCount()) {
+				pageVo.setNextPage(-1);
+			} else {
+				pageVo.setNextPage(pageNum + 1);
+			}
+			
+			if(pageNum == 1) {
+				pageVo.setPrePage(-1);
+			} else {
+				pageVo.setPrePage(pageNum - 1);
+			}
+
+			pageVo.setPageDevideCount((pageNum-1) / pageVo.getPageShow());
+		}
+		
+		System.out.println(pageVo);
+		
+		request.setAttribute("list", dao.findKwd(pageVo.getKeyword(), ((pageVo.getCurrentPage() - 1) * pageVo.getPageDivide()) , pageVo.getPageDivide()));
 		session.setAttribute("page", pageVo);
 		
 		MvcUtil.forward("board/list", request, response);

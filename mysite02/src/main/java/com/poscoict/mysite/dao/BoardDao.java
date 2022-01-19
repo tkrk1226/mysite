@@ -407,7 +407,7 @@ public class BoardDao {
 		return result;
 	}
 
-	public int pageCnt(String kwd) {
+	public int boardCnt(String kwd) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

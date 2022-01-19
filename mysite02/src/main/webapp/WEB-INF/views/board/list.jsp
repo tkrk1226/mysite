@@ -28,10 +28,10 @@
 						<th>작성일</th>
 						<th>&nbsp;</th>
 					</tr>				
-					<c:set var="count" value="${page.pageCount}" />
+					<c:set var="count" value="${page.boardCount}" />
 					<c:forEach items="${list}" var="vo" varStatus="status">
-					<tr>
-						<td>${count - status.index}</td>
+					<tr>       
+						<td>${count - status.index - ((page.currentPage - 1) * page.pageDivide)}</td>
 						<td style="text-align:left; padding-left:${(vo.depth - 1) * 20}px">
 							<c:if test="${vo.orderNo > 1}">
 								<img src="${pageContext.servletContext.contextPath }/assets/images/reply.png" />
@@ -50,15 +50,45 @@
 				</table>
 				
 				<!-- pager 추가 -->
+				
+				<c:choose>
+					<c:when test="${page.pageCount <= (page.pageDevideCount * page.pageShow + 5)}">
+						<c:set var="end" value="${page.pageCount}" />
+					</c:when>
+					<c:otherwise>
+						<c:set var="end" value="${page.pageDevideCount * page.pageShow + 5}" />
+					</c:otherwise>
+				</c:choose>
+				
+				<c:choose>
+					<c:when test="${page.pageCount <= (page.pageDevideCount * page.pageShow + 5)}">
+						<c:set var="end" value="${page.pageCount}" />
+					</c:when>
+					<c:otherwise>
+						<c:set var="end" value="${page.pageDevideCount * page.pageShow + 5}" />
+					</c:otherwise>
+				</c:choose>
+				
 				<div class="pager">
 					<ul>
-						<li><a href="">◀</a></li>
-						<li><a href="">1</a></li>
-						<li class="selected"><a href="">2</a></li>
-						<li><a href="${pageContext.servletContext.contextPath }/board?pageNum=${page.startPage}">3</a></li>
-						<li>4</li>
-						<li>5</li>
-						<li><a href="${pageContext.servletContext.contextPath }/board">▶</a></li>
+						<c:if test="${page.prePage ne -1}">
+						<li><a href="${pageContext.servletContext.contextPath }/board?pageNum=${page.prePage}">◀</a></li>
+						</c:if>
+						<c:forEach var="var" begin="${1 + page.pageDevideCount * page.pageShow}" end="${end}" step="1" varStatus="status">
+							<c:choose>
+								<c:when test="${ var == page.currentPage}">
+								<li class="selected">
+								</c:when>
+								<c:otherwise>
+									<li>
+								</c:otherwise>
+							</c:choose>
+								<a href="${pageContext.servletContext.contextPath }/board?pageNum=${status.count + page.pageDevideCount * page.pageShow}">${status.count + page.pageDevideCount * page.pageShow}</a>
+							</li>
+						</c:forEach>
+						<c:if test="${page.nextPage ne -1}">
+						<li><a href="${pageContext.servletContext.contextPath }/board?pageNum=${page.nextPage}">▶</a></li>
+						</c:if>
 					</ul>
 				</div>					
 				<!-- pager 추가 -->
