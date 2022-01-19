@@ -36,11 +36,9 @@ public class AddAction implements Action {
 			
 			vo = dao.findByNo(no);
 
-			boolean result = false;
-			result = dao.updateBeforeAdd();
-			System.out.println("updateBeforeAdd : " + result);
-			result = dao.insert(title, content, authUser.getNo(), vo.getGroupNo(), vo.getOrderNo(), vo.getDepth());
-			System.out.println("insert : " + result);
+			dao.updateBeforeAdd(vo.getGroupNo(), vo.getOrderNo());
+			dao.insert(title, content, authUser.getNo(), vo.getGroupNo(), vo.getOrderNo() + 1, vo.getDepth() + 1);
+
 			MvcUtil.redirect(request.getContextPath() + "/board", request, response);
 		} else {
 			MvcUtil.redirect(request.getContextPath() + "/board", request, response);

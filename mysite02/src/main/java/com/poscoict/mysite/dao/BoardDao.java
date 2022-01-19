@@ -44,7 +44,7 @@ public class BoardDao {
 			//3. SQL 준비 b.contents
 			String sql = "select b.no, b.title, b.hit,  a.name "
 					+ ", date_format(reg_date, '%Y-%m-%d %H:%i:%s') as reg_date, b.user_no"
-					+ " from user a, board b"
+					+ ", b.o_no, b.depth from user a, board b"
 					+ " where a.no = b.user_no"
 					+ " order by b.g_no desc, b.o_no asc";
 			pstmt = conn.prepareStatement(sql);
@@ -62,6 +62,8 @@ public class BoardDao {
 				String userName = rs.getString(4);
 				String regDate = rs.getString(5);
 				Long userNo = rs.getLong(6);
+				int orderNo = rs.getInt(7);
+				int depth = rs.getInt(8);
 				
 				BoardVo vo = new BoardVo();
 				vo.setNo(no);
@@ -70,6 +72,8 @@ public class BoardDao {
 				vo.setUserName(userName);
 				vo.setRegDate(regDate);
 				vo.setUserNo(userNo);
+				vo.setOrderNo(orderNo);
+				vo.setDepth(depth);
 				
 				result.add(vo);
 			}
@@ -407,7 +411,7 @@ public class BoardDao {
 		return result;
 	}
 
-	public boolean updateBeforeAdd() {
+	public boolean updateBeforeAdd(int groupNo, int orderNo) {
 		boolean result = false;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -418,10 +422,12 @@ public class BoardDao {
 			
 			//3. SQL 준비
 			
-			String sql = "update board set o_no = (o_no + 1) where o_no > o_no and g_no = g_no";
+			String sql = "update board set o_no = (o_no + 1) where g_no = ? and o_no > ?";
 			pstmt = conn.prepareStatement(sql);
 
 			//4. 바인딩(binding)	
+			pstmt.setInt(1, groupNo);
+			pstmt.setInt(2, orderNo);
 			
 			//5. SQL 실행 , executeQuery는 rs, executeUpdate는 int로 반환한다. 
 			result = (pstmt.executeUpdate() == 1);
