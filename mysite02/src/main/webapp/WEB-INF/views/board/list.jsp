@@ -52,27 +52,18 @@
 				<!-- pager 추가 -->
 				
 				<c:choose>
-					<c:when test="${page.pageCount <= (page.pageDevideCount * page.pageShow + 5)}">
+					<c:when test="${page.pageCount <= (page.pageDevideCount * page.pageShow + page.pageShow)}">
 						<c:set var="end" value="${page.pageCount}" />
 					</c:when>
 					<c:otherwise>
-						<c:set var="end" value="${page.pageDevideCount * page.pageShow + 5}" />
+						<c:set var="end" value="${page.pageDevideCount * page.pageShow + page.pageShow}" />
 					</c:otherwise>
 				</c:choose>
-				
-				<c:choose>
-					<c:when test="${page.pageCount <= (page.pageDevideCount * page.pageShow + 5)}">
-						<c:set var="end" value="${page.pageCount}" />
-					</c:when>
-					<c:otherwise>
-						<c:set var="end" value="${page.pageDevideCount * page.pageShow + 5}" />
-					</c:otherwise>
-				</c:choose>
-				
+								
 				<div class="pager">
 					<ul>
 						<c:if test="${page.prePage ne -1}">
-						<li><a href="${pageContext.servletContext.contextPath }/board?pageNum=${page.prePage}">◀</a></li>
+						<li><a href="${pageContext.servletContext.contextPath }/board?pageNum=${page.prePage}&kwd=${page.keyword}">◀</a></li>
 						</c:if>
 						<c:forEach var="var" begin="${1 + page.pageDevideCount * page.pageShow}" end="${end}" step="1" varStatus="status">
 							<c:choose>
@@ -83,11 +74,11 @@
 									<li>
 								</c:otherwise>
 							</c:choose>
-								<a href="${pageContext.servletContext.contextPath }/board?pageNum=${status.count + page.pageDevideCount * page.pageShow}">${status.count + page.pageDevideCount * page.pageShow}</a>
+								<a href="${pageContext.servletContext.contextPath }/board?pageNum=${status.count + page.pageDevideCount * page.pageShow}&kwd=${page.keyword}">${status.count + page.pageDevideCount * page.pageShow}</a>
 							</li>
 						</c:forEach>
 						<c:if test="${page.nextPage ne -1}">
-						<li><a href="${pageContext.servletContext.contextPath }/board?pageNum=${page.nextPage}">▶</a></li>
+						<li><a href="${pageContext.servletContext.contextPath }/board?pageNum=${page.nextPage}&kwd=${page.keyword}">▶</a></li>
 						</c:if>
 					</ul>
 				</div>					
