@@ -21,7 +21,7 @@ public class UserDao {
 			conn = getConnection();
 			
 			//3. SQL 준비
-			String sql = "insert into user values(null, ?, ?, ?, ?, now());";
+			String sql = "insert into user values(null, ?, ?, ?, ?, now())";
 			pstmt = conn.prepareStatement(sql);
 
 			//4. 바인딩(binding)	
