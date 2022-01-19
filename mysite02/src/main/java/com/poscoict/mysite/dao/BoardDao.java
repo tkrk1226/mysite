@@ -319,54 +319,6 @@ public class BoardDao {
 		return result;
 	}
 	
-	public Long cntAll(){
-		
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		Long result = -1L;
-		
-		try {
-			conn = getConnection();
-
-			//3. SQL 준비
-			String sql = "select count(*) from board";
-			pstmt = conn.prepareStatement(sql);
-
-			//4. 바인딩(binding) setString...?			
-			//5. SQL 실행
-			rs = pstmt.executeQuery();
-			
-			//boiler plate code => 상투적인 코드 => 비효율 
-			
-			if(rs.next()) {
-				result = rs.getLong(1);
-			}
-			
-		} catch (SQLException e) {
-			System.out.print("error : " + e); // e.getMessage()
-		}
-		
-		finally {
-			// 자원 정리 -> try OR catch 둘 다 실행 
-			try {
-				if(rs != null) {
-					rs.close();
-				}
-				if(pstmt != null) {
-					pstmt.close();
-				}
-				if(conn != null) {
-					conn.close();
-				}
-			} catch(SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return result;
-	}
-
 	public boolean updateHit(int cnt, Long no) {
 		boolean result = false;
 		Connection conn = null;
@@ -453,5 +405,127 @@ public class BoardDao {
 		}
 		
 		return result;
+	}
+
+	public int pageCnt(String kwd) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		int result = -1;
+		
+		try {
+			conn = getConnection();
+
+			//3. SQL 준비
+			String sql = "select count(*) from board where title like '%"+ kwd + "%'";
+			pstmt = conn.prepareStatement(sql);
+
+			//4. 바인딩(binding) setString...?			
+			//5. SQL 실행
+			rs = pstmt.executeQuery();
+			
+			//boiler plate code => 상투적인 코드 => 비효율 
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			System.out.print("error : " + e); // e.getMessage()
+		}
+		
+		finally {
+			// 자원 정리 -> try OR catch 둘 다 실행 
+			try {
+				if(rs != null) {
+					rs.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
+	public List<BoardVo> findKwd(String kwd, int offset, int limit) {
+		List<BoardVo> result = new ArrayList<>();
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection();
+
+			//3. SQL 준비 b.contents
+			String sql = "select b.no, b.title, b.hit,  a.name "
+					+ ", date_format(reg_date, '%Y-%m-%d %H:%i:%s') as reg_date, b.user_no"
+					+ ", b.o_no, b.depth from user a, board b"
+					+ " where a.no = b.user_no and b.title like '%" + kwd + "%'"
+					+ " order by b.g_no desc, b.o_no asc limit ?, ?";
+			pstmt = conn.prepareStatement(sql);
+
+			//4. 바인딩(binding) setString...?			
+//			pstmt.setString(1, kwd);
+			pstmt.setInt(1, offset);
+			pstmt.setInt(2, limit);
+			
+			//5. SQL 실행
+			rs = pstmt.executeQuery();
+			
+			//boiler plate code => 상투적인 코드 => 비효율 
+			
+			while(rs.next()) {
+				Long no = rs.getLong(1);
+				String title = rs.getString(2);
+				int hit = rs.getInt(3);
+				String userName = rs.getString(4);
+				String regDate = rs.getString(5);
+				Long userNo = rs.getLong(6);
+				int orderNo = rs.getInt(7);
+				int depth = rs.getInt(8);
+				
+				BoardVo vo = new BoardVo();
+				vo.setNo(no);
+				vo.setTitle(title);
+				vo.setHit(hit);
+				vo.setUserName(userName);
+				vo.setRegDate(regDate);
+				vo.setUserNo(userNo);
+				vo.setOrderNo(orderNo);
+				vo.setDepth(depth);
+				
+				result.add(vo);
+//				System.out.println(vo);
+			}
+			
+		} catch (SQLException e) {
+			System.out.print("error : " + e); // e.getMessage()
+		}
+		
+		finally {
+			// 자원 정리 -> try OR catch 둘 다 실행 
+			try {
+				if(rs != null) {
+					rs.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;		
 	}
 }

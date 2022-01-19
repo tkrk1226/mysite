@@ -15,7 +15,7 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="" method="post">
+				<form id="search_form" action="${pageContext.servletContext.contextPath}/board" method="post">
 					<input type="text" id="kwd" name="kwd" value="">
 					<input type="submit" value="찾기">
 				</form>
@@ -28,10 +28,10 @@
 						<th>작성일</th>
 						<th>&nbsp;</th>
 					</tr>				
-					<c:set var="count" value="${fn:length(list)}" />
+					<c:set var="count" value="${page.pageCount}" />
 					<c:forEach items="${list}" var="vo" varStatus="status">
 					<tr>
-						<td>${count-status.index}</td>
+						<td>${count - status.index}</td>
 						<td style="text-align:left; padding-left:${(vo.depth - 1) * 20}px">
 							<c:if test="${vo.orderNo > 1}">
 								<img src="${pageContext.servletContext.contextPath }/assets/images/reply.png" />
@@ -54,11 +54,11 @@
 					<ul>
 						<li><a href="">◀</a></li>
 						<li><a href="">1</a></li>
-						<li class="selected">2</li>
-						<li><a href="">3</a></li>
+						<li class="selected"><a href="">2</a></li>
+						<li><a href="${pageContext.servletContext.contextPath }/board?pageNum=${page.startPage}">3</a></li>
 						<li>4</li>
 						<li>5</li>
-						<li><a href="">▶</a></li>
+						<li><a href="${pageContext.servletContext.contextPath }/board">▶</a></li>
 					</ul>
 				</div>					
 				<!-- pager 추가 -->
