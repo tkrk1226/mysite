@@ -123,7 +123,7 @@ public class BoardDao {
 				pstmt.setInt(3, groupNo);
 				pstmt.setInt(4, orderNo);
 				pstmt.setInt(5, depth);
-				pstmt.setLong(6, depth);
+				pstmt.setLong(6, userNo);
 			}
 
 			//4. 바인딩(binding)	
@@ -407,7 +407,7 @@ public class BoardDao {
 		return result;
 	}
 
-	public boolean updateBeforeAdd(BoardVo vo) {
+	public boolean updateBeforeAdd() {
 		boolean result = false;
 		Connection conn = null;
 		PreparedStatement pstmt = null;

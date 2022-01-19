@@ -15,7 +15,7 @@
 		<div id="content">
 			<div id="board">
 				<form class="board-form" method="post" action="${ pageContext.request.contextPath }/board">
-					<input type="hidden" name="a" value="update">
+					<input type="hidden" name="a" value="add">
 					<input type="hidden" name="no" value="${view.no}">
 					<table class="tbl-ex">
 						<tr>

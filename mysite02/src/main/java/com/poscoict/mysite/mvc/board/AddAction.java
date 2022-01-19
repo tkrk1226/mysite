@@ -31,12 +31,19 @@ public class AddAction implements Action {
 		BoardDao dao = new BoardDao();
 		if (strNo != null) {
 			Long no = Long.parseLong(strNo);
+			String title = request.getParameter("title");
+			String content = request.getParameter("content");
+			
 			vo = dao.findByNo(no);
-		}
 
-		dao.updateBeforeAdd(vo);
-		dao.insert(vo.getTitle(), vo.getContents(), vo.getNo(), vo.getGroupNo(), vo.getOrderNo(), vo.getDepth());
-		
-		MvcUtil.redirect(request.getContextPath() + "/board", request, response);
+			boolean result = false;
+			result = dao.updateBeforeAdd();
+			System.out.println("updateBeforeAdd : " + result);
+			result = dao.insert(title, content, authUser.getNo(), vo.getGroupNo(), vo.getOrderNo(), vo.getDepth());
+			System.out.println("insert : " + result);
+			MvcUtil.redirect(request.getContextPath() + "/board", request, response);
+		} else {
+			MvcUtil.redirect(request.getContextPath() + "/board", request, response);
+		}		
 	}
 }
