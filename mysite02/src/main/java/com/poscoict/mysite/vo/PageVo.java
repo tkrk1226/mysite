@@ -2,8 +2,8 @@ package com.poscoict.mysite.vo;
 
 public class PageVo {
 
-	private int pageDivide = 8; // 한 페이지 내에서 보여주는 게시글 개수
-	private int pageShow = 8;   // 한 번에 보여주는 페이지 개수
+	private int pageDivide = 7; // 한 페이지 내에서 보여주는 게시글 개수
+	private int pageShow = 7;   // 한 번에 보여주는 페이지 개수
 	private int boardCount = -1; // 총 게시글 개수  
 	private int pageCount = -1; // 총 페이지 개수
 	private int pageDevideCount = 0; // 현재 속한 페이지를 pageShow로 나눈 값 , 1 - 5 : 1 , 6 - 10 : 2 , currentpage에서 - 1을 하고 show로 나눈 몫을 가지게...

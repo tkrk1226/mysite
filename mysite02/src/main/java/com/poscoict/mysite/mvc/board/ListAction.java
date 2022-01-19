@@ -20,67 +20,61 @@ public class ListAction implements Action {
 		HttpSession session = request.getSession(true);
 		BoardDao dao = new BoardDao();
 		PageVo pageVo = new PageVo();
-		
+
 		String kwd = request.getParameter("kwd");
 		String strPageNum = request.getParameter("pageNum");
-		
+
 		if (kwd != null && (!kwd.isBlank())) {
-//			System.out.println(kwd);
 			pageVo.setKeyword(kwd);
 		}
 
 		int boardCount = dao.boardCnt(pageVo.getKeyword());
 		int pageCount = boardCount / pageVo.getPageDivide();
-		if(boardCount % pageVo.getPageDivide() >= 1) {
+		if (boardCount % pageVo.getPageDivide() >= 1) {
 			pageCount++;
 		}
-		
+
 		pageVo.setBoardCount(boardCount);
 		pageVo.setPageCount(pageCount);
-		
+
 		if (strPageNum == null || strPageNum.isBlank()) {
 			pageVo.setCurrentPage(1);
-			
-			if(pageVo.getCurrentPage() >= pageVo.getPageCount()) {
+			if (pageVo.getCurrentPage() >= pageVo.getPageCount()) {
 				pageVo.setNextPage(-1);
 			} else {
 				pageVo.setNextPage(2);
 			}
-			
 			pageVo.setPrePage(-1);
 			pageVo.setPageDevideCount(0);
-			
+
 		} else {
 			int pageNum = Integer.parseInt(strPageNum);
-			
-			if(pageNum > pageVo.getPageCount()) {
+
+			if (pageNum > pageVo.getPageCount()) {
 				pageNum = pageVo.getPageCount();
-			} else if(pageNum < 0 ){
+			} else if (pageNum < 0) {
 				pageNum = 1;
 			}
 
 			pageVo.setCurrentPage(pageNum);
-			
-			if(pageNum == pageVo.getPageCount()) {
+
+			if (pageNum == pageVo.getPageCount()) {
 				pageVo.setNextPage(-1);
 			} else {
 				pageVo.setNextPage(pageNum + 1);
 			}
-			
-			if(pageNum == 1) {
+
+			if (pageNum == 1) {
 				pageVo.setPrePage(-1);
 			} else {
 				pageVo.setPrePage(pageNum - 1);
 			}
 
-			pageVo.setPageDevideCount((pageNum-1) / pageVo.getPageShow());
+			pageVo.setPageDevideCount((pageNum - 1) / pageVo.getPageShow());
 		}
-		
-//		System.out.println(pageVo);
-		
-		request.setAttribute("list", dao.findKwd(pageVo.getKeyword(), ((pageVo.getCurrentPage() - 1) * pageVo.getPageDivide()) , pageVo.getPageDivide()));
+
+		request.setAttribute("list", dao.findKwd(pageVo.getKeyword(),((pageVo.getCurrentPage() - 1) * pageVo.getPageDivide()), pageVo.getPageDivide()));
 		session.setAttribute("page", pageVo);
-		
 		MvcUtil.forward("board/list", request, response);
 	}
 
