@@ -34,7 +34,7 @@
 					</table>
 					<div class="bottom">
 						<a href="${ header.referer }">취소</a>
-						<input type="submit" value="수정">
+						<input type="submit" value="등록">
 					</div>
 				</form>				
 			</div>
