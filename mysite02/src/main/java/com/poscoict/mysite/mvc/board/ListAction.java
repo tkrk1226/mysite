@@ -5,7 +5,6 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.poscoict.mysite.dao.BoardDao;
 import com.poscoict.mysite.vo.PageVo;
@@ -17,7 +16,6 @@ public class ListAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		HttpSession session = request.getSession(true);
 		BoardDao dao = new BoardDao();
 		PageVo pageVo = new PageVo();
 
@@ -74,7 +72,7 @@ public class ListAction implements Action {
 		}
 
 		request.setAttribute("list", dao.findKwd(pageVo.getKeyword(),((pageVo.getCurrentPage() - 1) * pageVo.getPageDivide()), pageVo.getPageDivide()));
-		session.setAttribute("page", pageVo);
+		request.setAttribute("page", pageVo);
 		MvcUtil.forward("board/list", request, response);
 	}
 
