@@ -8,17 +8,17 @@ import com.poscoict.mysite.vo.BoardVo;
 public class BoardDaoTest {
 	public static void main(String[] args) {
 //		testFindKwd();
-//		testInsert();
+		testInsert();
 	}
 
 	private static void testInsert() {
 
 		BoardDao dao = new BoardDao();
-		int end = 100;
+		int end = 68;
 
-		for (int i = 31; i < end; i++) {
-			String title = "안녕" + i;
-			String content = "오늘 " + i;
+		for (int i = 0; i < end; i++) {
+			String title = "물티슈" + i;
+			String content = "대모산" + i;
 			dao.insert(title, content, 2L, -1, -1, -1);
 		}
 

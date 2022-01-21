@@ -6,9 +6,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.poscoict.mysite.dao.BoardDao;
 import com.poscoict.mysite.vo.BoardVo;
+import com.poscoict.mysite.vo.UserVo;
 import com.poscoict.web.mvc.Action;
 import com.poscoict.web.util.MvcUtil;
 
@@ -28,10 +30,20 @@ public class ViewAction implements Action {
 			
 			Cookie[] cookies = request.getCookies();
 			Cookie viewCookie = null;
-					
+			
+			HttpSession session = request.getSession();
+			UserVo userVo = (UserVo) session.getAttribute("authUser");
+			String checkUserNo = "";
+			if(userVo != null) {
+				checkUserNo = Long.toString(userVo.getNo());
+			}
+			String checkCookie = checkUserNo + "&" + no;
+//			System.out.println(checkUserNo);
+//			System.out.println(checkCookie);
+			
 			if(cookies != null && cookies.length > 0) {
 				for(Cookie cookie : cookies) {
-					if(strNo.equals(cookie.getName())) {
+					if(checkCookie.equals(cookie.getName())) {
 						viewCookie = cookie;
 						break; // 다른 쿠키는 관심이 없기 때문
 					}
@@ -39,7 +51,7 @@ public class ViewAction implements Action {
 			}
 			
 			if(viewCookie == null) {
-				Cookie cookie = new Cookie(strNo, String.valueOf((vo.getHit() + 1)));
+				Cookie cookie = new Cookie(checkCookie, String.valueOf((vo.getHit() + 1)));
 				cookie.setPath(request.getContextPath());
 				cookie.setMaxAge(COOKIE_LIFETIME); 	
 				response.addCookie(cookie);

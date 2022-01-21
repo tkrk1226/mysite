@@ -229,7 +229,7 @@ public class BoardDao {
 			
 			//boiler plate code => 상투적인 코드 => 비효율 
 			
-			while(rs.next()) {
+			if(rs.next()) {
 				String title = rs.getString(1);
 				String contents = rs.getString(2);
 				Long userNo = rs.getLong(3);
