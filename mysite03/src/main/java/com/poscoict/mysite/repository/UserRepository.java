@@ -122,7 +122,6 @@ public class UserRepository {
 		boolean result = false;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 		
 		try {
 			conn = getConnection();
@@ -131,7 +130,7 @@ public class UserRepository {
 			
 			String sql;
 			
-			if(vo.getPassword() == null) {
+			if(vo.getPassword() == null || "".equals(vo.getPassword())) {
 				sql = "update user set name = ?, gender = ? where no = ?";
 			} else {
 				sql = "update user set name = ?, gender = ?, password = ? where no = ?";
@@ -142,7 +141,7 @@ public class UserRepository {
 			//4. 바인딩(binding)	
 			pstmt.setString(1, vo.getName());
 			pstmt.setString(2, vo.getGender());
-			if(vo.getPassword() == null) {
+			if(vo.getPassword() == null || "".equals(vo.getPassword())) {
 				pstmt.setLong(3, vo.getNo());
 			}
 			else {
