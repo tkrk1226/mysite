@@ -11,7 +11,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.poscoict.mysite.vo.BoardVo;
-import com.poscoict.mysite.vo.GuestbookVo;
 
 @Repository
 public class BoardRepository {
@@ -103,8 +102,8 @@ public class BoardRepository {
 		}
 		return result;
 	}
-	
-	public boolean insert(String title, String contents, Long userNo , int groupNo, int orderNo, int depth) {
+	//String title, String contents, Long userNo , int groupNo, int orderNo, int depth
+	public boolean insert(BoardVo vo) {
 		
 		boolean result = false;
 		Connection conn = null;
@@ -116,21 +115,21 @@ public class BoardRepository {
 			
 			//3. SQL 준비
 			String sql = null;
-			if(groupNo == -1 && orderNo == -1 && depth == -1) {
+			if(vo.getGroupNo() == null && vo.getOrderNo() == null && vo.getDepth() == null) {
 				sql = "insert into board values(null, ?, ?, 0, (select ifnull(max(g_no) + 1, 1) from board a) , 1, 1 , now(), ?)";	
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, title);
-				pstmt.setString(2, contents);
-				pstmt.setLong(3, userNo);
+				pstmt.setString(1, vo.getTitle());
+				pstmt.setString(2, vo.getContents());
+				pstmt.setLong(3, vo.getUserNo());
 			} else {
 				sql = "insert into board values(null, ?, ?, 0, ?, ?, ?, now(), ?)";
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, title);
-				pstmt.setString(2, contents);
-				pstmt.setInt(3, groupNo);
-				pstmt.setInt(4, orderNo);
-				pstmt.setInt(5, depth);
-				pstmt.setLong(6, userNo);
+				pstmt.setString(1, vo.getTitle());
+				pstmt.setString(2, vo.getContents());
+				pstmt.setInt(3, vo.getGroupNo());
+				pstmt.setInt(4, vo.getOrderNo() + 1);
+				pstmt.setInt(5, vo.getDepth() + 1);
+				pstmt.setLong(6, vo.getUserNo());
 			}
 
 			//4. 바인딩(binding)	

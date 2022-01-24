@@ -14,12 +14,11 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${ pageContext.request.contextPath }/board">
-					<input type="hidden" name="a" value="add">
-					<input type="hidden" name="no" value="${view.no}">
+				<form class="board-form" method="post" action="${ pageContext.request.contextPath }/board/add">
+					<input type="hidden" name="no" value="${boardVo.no}">
 					<table class="tbl-ex">
 						<tr>
-							<th colspan="2">${view.title}의 답글</th>
+							<th colspan="2">${boardVo.title}의 답글</th>
 						</tr>
 						<tr>
 							<td class="label">제목</td>
@@ -28,7 +27,7 @@
 						<tr>
 							<td class="label">내용</td>
 							<td>
-								<textarea id="content" name="content"></textarea>
+								<textarea id="content" name="contents"></textarea>
 							</td>
 						</tr>
 					</table>

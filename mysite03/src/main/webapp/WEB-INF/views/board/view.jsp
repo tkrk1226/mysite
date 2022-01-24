@@ -21,24 +21,24 @@
 					</tr>
 					<tr>
 						<td class="label">제목</td>
-						<td>${view.title}</td>
+						<td>${boardVo.title}</td>
 					</tr>
 					<tr>
 						<td class="label">내용</td>
 						<td>
 							<div class="view-content">
-								${fn:replace(view.contents, newline, "<br/>") }
+								${fn:replace(boardVo.contents, newline, "<br/>") }
 							</div>
 						</td>
 					</tr>
 				</table>
 				<div class="bottom">
-					<c:if test="${view.userNo eq authUser.no}">
-					<a href="${ pageContext.request.contextPath }/board?a=delete&no=${view.no}">글삭제</a>
-					<a href="${ pageContext.request.contextPath }/board?a=updateform&no=${view.no}">글수정</a>
+					<c:if test="${boardVo.userNo eq authUser.no}">
+					<a href="${ pageContext.request.contextPath }/board/delete/${boardVo.no}">글삭제</a>
+					<a href="${ pageContext.request.contextPath }/board/update/${boardVo.no}">글수정</a>
 					</c:if>
 					<c:if test="${not empty authUser}">
-					<a href="${ pageContext.request.contextPath }/board?a=addform&no=${view.no}">답글작성</a>
+					<a href="${ pageContext.request.contextPath }/board/add/${boardVo.no}">답글작성</a>
 					</c:if>
 					<a href="${ pageContext.request.contextPath }/board">글목록</a>
 				</div>

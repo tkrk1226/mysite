@@ -36,13 +36,13 @@
 							<c:if test="${vo.orderNo > 1}">
 								<img src="${pageContext.servletContext.contextPath }/assets/images/reply.png" />
 							</c:if>
-							<a href="${pageContext.servletContext.contextPath }/board/view/no=${vo.no}">${vo.title }</a>
+							<a href="${pageContext.servletContext.contextPath }/board/view/${vo.no}">${vo.title }</a>
 						</td>
 						<td>${vo.userName}</td>
 						<td>${vo.hit }</td>
 						<td>${vo.regDate }</td>
 						<c:if test="${vo.userNo eq authUser.no }">
-						<td><a href="${pageContext.servletContext.contextPath }/board/delete?no=${vo.no}" class="del" style="background-image:url('${pageContext.servletContext.contextPath }/assets/images/recycle.png')">삭제</a></td>
+						<td><a href="${pageContext.servletContext.contextPath }/board/delete/${vo.no}?currentPage=${currentPage}&keyword=${keyword}" class="del" style="background-image:url('${pageContext.servletContext.contextPath }/assets/images/recycle.png')">삭제</a></td>
 						</c:if>
 					</tr>
 					</c:forEach> 
