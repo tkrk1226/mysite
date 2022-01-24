@@ -41,8 +41,13 @@ public class BoardService {
 	}
 
 	// 글 삭제
-	public Boolean deleteContents(Long no, Long userNo) {
-		return false;
+	public Boolean deleteContents(Long boardNo, Long userNo) {
+		Boolean result = false;
+		BoardVo vo = boardRepository.findByNo(boardNo);
+		if(vo.getUserNo() == userNo) {
+			result = boardRepository.delete(boardNo);
+		}
+		return result;
 	}
 
 	// 글 리스트(찾기 결과와도 동일)

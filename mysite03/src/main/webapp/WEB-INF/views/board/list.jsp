@@ -36,7 +36,7 @@
 							<c:if test="${vo.orderNo > 1}">
 								<img src="${pageContext.servletContext.contextPath }/assets/images/reply.png" />
 							</c:if>
-							<a href="${pageContext.servletContext.contextPath }/board/view?no=${vo.no}">${vo.title }</a>
+							<a href="${pageContext.servletContext.contextPath }/board/view/no=${vo.no}">${vo.title }</a>
 						</td>
 						<td>${vo.userName}</td>
 						<td>${vo.hit }</td>
