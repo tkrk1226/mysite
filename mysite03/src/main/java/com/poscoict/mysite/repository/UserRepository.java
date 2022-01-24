@@ -176,7 +176,7 @@ public class UserRepository {
 		return result;
 	}
 
-	public UserVo findByNo(Long no) {
+	public UserVo findByNo(Long userNo) {
 
 		// 처음에는 null 이었지만 select에 있다면 제대로 된 객체를 반환하도록
 		UserVo result = null;
@@ -189,20 +189,21 @@ public class UserRepository {
 			conn = getConnection();
 			
 			//3. SQL 준비
-			String sql = "select name, email, gender from user where no = ?";
+			String sql = "select no, name, email, gender from user where no = ?";
 			
 			//4. 바인딩(binding)	
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setLong(1, no);
+			pstmt.setLong(1, userNo);
 			
 			
 			//5. SQL 실행 , executeQuery는 rs, executeUpdate는 int로 반환한다. 
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				 String name = rs.getString(1);
-				 String email = rs.getString(2);
-				 String gender = rs.getString(3);
+				 Long no = rs.getLong(1);
+				 String name = rs.getString(2);
+				 String email = rs.getString(3);
+				 String gender = rs.getString(4);
 				 
 				 result = new UserVo();
 				 result.setNo(no);
