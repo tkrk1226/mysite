@@ -15,18 +15,23 @@ public class GuestbookService {
 	private GuestbookRepository guestbookRepository;
 	
 	public List<GuestbookVo> getMessageList(){
-		
-		return null;
+		return guestbookRepository.findAll();
 	}
 	
 	public Boolean deleteMessage(Long no, String password) {
-	
-		return false;
+		Boolean result = false;
+		if(guestbookRepository.delete(no, password)) {
+			result = true;
+		}
+		return result;
 	}
 	
 	public Boolean addMessage(GuestbookVo vo) {
-		
-		return false;
+		Boolean result = false;
+		if(guestbookRepository.insert(vo)) {
+			result = true;
+		}
+		return result;
 	}
 	
 }
