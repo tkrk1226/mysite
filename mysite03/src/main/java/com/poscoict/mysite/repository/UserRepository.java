@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 import org.springframework.stereotype.Repository;
 
+import com.poscoict.mysite.exception.UserRepositoryException;
 import com.poscoict.mysite.vo.UserVo;
 
 @Repository
@@ -59,20 +60,17 @@ public class UserRepository {
 		return result;
 	}
 
-	public UserVo findByEmailAndPassword(String email, String password) {
-
+	public UserVo findByEmailAndPassword(String email, String password) throws UserRepositoryException {
 		// 처음에는 null 이었지만 select에 있다면 제대로 된 객체를 반환하도록
 		UserVo result = null;
-		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
 		try {
 			conn = getConnection();
 			
 			//3. SQL 준비
-			String sql = "select no, name from user where email = ? and password = ?";
+			String sql = "2select no, name from user where email = ? and password = ?";
 			pstmt = conn.prepareStatement(sql);
 
 			//4. 바인딩(binding)	
@@ -85,16 +83,14 @@ public class UserRepository {
 			if(rs.next()) {
 				 Long no = rs.getLong(1);
 				 String name = rs.getString(2);
-				 
 				 result = new UserVo();
 				 result.setNo(no);
 				 result.setName(name);
 			}
-			
 			//boiler plate code => 상투적인 코드 => 비효율 
-						
 		} catch (SQLException e) {
-			System.out.print("error : " + e); // e.getMessage()
+			throw new UserRepositoryException(e.toString());
+//			System.out.print("error : " + e); // e.getMessage()
 		}
 		
 		finally {
