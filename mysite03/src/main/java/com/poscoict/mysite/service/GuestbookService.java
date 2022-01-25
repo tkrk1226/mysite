@@ -27,11 +27,7 @@ public class GuestbookService {
 	}
 	
 	public Boolean addMessage(GuestbookVo vo) {
-		Boolean result = false;
-		if(guestbookRepository.insert(vo)) {
-			result = true;
-		}
-		return result;
+		return 1 == guestbookRepository.insert(vo);
 	}
 	
 }
