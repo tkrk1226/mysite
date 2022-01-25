@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.poscoict.mysite.service.BoardService;
 import com.poscoict.mysite.vo.BoardVo;
 import com.poscoict.mysite.vo.UserVo;
+import com.poscoict.web.util.WebUtil;
 
 @Controller
 @RequestMapping("/board")
@@ -45,7 +46,7 @@ public class BoardController {
 		}
 
 		boardService.deleteContents(boardNo, authUser.getNo());
-		return "redirect:/board?currentPage=" + page + "&keyword=" + keyword;
+		return "redirect:/board?currentPage=" + page + "&keyword=" + WebUtil.encodeURL(keyword, "UTF-8");
 	}
 
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
