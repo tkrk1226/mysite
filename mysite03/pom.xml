@@ -36,6 +36,20 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 
+		<!-- Spring jdbc -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+		<!-- Common DBCP -->
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
+		</dependency>
+
 		<!-- MySQL Connector -->
 		<dependency>
 			<groupId>mysql</groupId>
