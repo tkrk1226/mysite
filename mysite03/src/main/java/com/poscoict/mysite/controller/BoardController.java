@@ -65,10 +65,8 @@ public class BoardController {
 		if (authUser == null) {
 			return "redirect:/";
 		}
-		System.out.println(boardVo);
 		boardVo.setUserNo(authUser.getNo());
 		Boolean result = boardService.addContents(boardVo);
-		System.out.println(result);
 		return "redirect:/board";
 	}
 
@@ -102,9 +100,7 @@ public class BoardController {
 			return "redirect:/";
 		}
 		boardVo.setUserNo(authUser.getNo());
-		System.out.println(boardVo);
 		Boolean result = boardService.updateContents(boardVo);
-		System.out.println(result);
 		return "redirect:/board";
 	}
 
@@ -123,15 +119,12 @@ public class BoardController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String add(HttpSession session, BoardVo boardVo) {
 		/* access control */
-		System.out.println("add : " + boardVo);
-
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		if (authUser == null) {
 			return "redirect:/";
 		}
 		boardVo.setUserNo(authUser.getNo());
 		Boolean result = boardService.addContents(boardVo);
-		System.out.println(result);
 		return "redirect:/board";
 	}
 

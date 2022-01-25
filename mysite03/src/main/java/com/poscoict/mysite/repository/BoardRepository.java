@@ -336,7 +336,7 @@ public class BoardRepository {
 			pstmt = conn.prepareStatement(sql);
 
 			//4. 바인딩(binding)	
-			pstmt.setInt(1, cnt);
+			pstmt.setInt(1, cnt + 1);
 			pstmt.setLong(2, no);
 			
 			//5. SQL 실행 , executeQuery는 rs, executeUpdate는 int로 반환한다. 

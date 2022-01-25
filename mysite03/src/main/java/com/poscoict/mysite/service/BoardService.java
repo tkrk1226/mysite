@@ -28,7 +28,14 @@ public class BoardService {
 
 	// 글보기
 	public BoardVo getContents(Long no) {
-		return boardRepository.findByNo(no);
+		
+		BoardVo boardVo = boardRepository.findByNo(no);
+		
+		if(boardVo != null) {
+			boardRepository.updateHit(boardVo.getHit(), no);
+		}
+		
+		return boardVo;
 	}
 
 	// 글 수정 하기 전
