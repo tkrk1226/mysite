@@ -56,7 +56,7 @@
 	<insert id="insert" parameterType="boardvo">
 
 	<choose>
-		<when test="groupNo == null and orderNo() == null and depth() == null">
+		<when test="groupNo == null and orderNo == null and depth == null">
 		<![CDATA[
 		insert into board values(null, #{title}, #{contents}, 0, (select ifnull(max(g_no) + 1, 1) from board a) , 1, 1 , now(), #{userNo})
 		]]>
