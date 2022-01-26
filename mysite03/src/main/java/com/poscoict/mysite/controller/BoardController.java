@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.poscoict.mysite.security.Auth;
+import com.poscoict.mysite.security.AuthUser;
 import com.poscoict.mysite.service.BoardService;
 import com.poscoict.mysite.vo.BoardVo;
 import com.poscoict.mysite.vo.UserVo;
@@ -34,15 +35,12 @@ public class BoardController {
 		return "board/list";
 	}
 
+	@Auth
 	@RequestMapping("/delete/{no}")
-	public String delete(HttpSession session, @PathVariable("no") Long boardNo,
+	public String delete(@AuthUser UserVo authUser, @PathVariable("no") Long boardNo,
 			@RequestParam(value = "currentPage", required = true, defaultValue = "1") Integer page,
 			@RequestParam(value = "keyword", required = true, defaultValue = "") String keyword) {
-		/* access control */
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		if (authUser == null) {
-			return "redirect:/";
-		}
+
 		boardService.deleteContents(boardNo, authUser.getNo());
 		return "redirect:/board?currentPage=" + page + "&keyword=" + WebUtil.encodeURL(keyword, "UTF-8");
 	}
@@ -53,15 +51,11 @@ public class BoardController {
 		return "board/write";
 	}
 
+	@Auth
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String write(HttpSession session, BoardVo boardVo) {
-		/* access control */
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		if (authUser == null) {
-			return "redirect:/";
-		}
+	public String write(@AuthUser UserVo authUser, BoardVo boardVo) {
 		boardVo.setUserNo(authUser.getNo());
-		Boolean result = boardService.addContents(boardVo);
+		boardService.addContents(boardVo);
 		return "redirect:/board";
 	}
 
