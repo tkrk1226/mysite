@@ -23,17 +23,17 @@ public class UserRepository {
 		return count == 1;
 	}
 
+	public boolean update(UserVo vo) {
+		int count = sqlSession.update("user.update", vo);
+		return count == 1;
+	}
+	
 	public UserVo findByEmailAndPassword(String email, String password) throws UserRepositoryException {
 		// 처음에는 null 이었지만 select에 있다면 제대로 된 객체를 반환하도록
 		Map<String, String> map = new HashMap<>();
 		map.put("e", email);
 		map.put("p", password);
-		return sqlSession.selectOne("findByEmailAndPassword", map);
-	}
-	
-	public boolean update(UserVo vo) {
-		int count = sqlSession.update("user.update", vo);
-		return count == 1;
+		return sqlSession.selectOne("user.findByEmailAndPassword", map);
 	}
 
 	public UserVo findByNo(Long userNo) {

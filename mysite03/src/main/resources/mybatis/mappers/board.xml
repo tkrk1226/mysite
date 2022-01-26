@@ -11,9 +11,71 @@
 		</when>
 		<otherwise>
 			<![CDATA[
-			select count(*) from board where title like '%${_parameter}%' or contents like '%${_parameter}%'
+			select count(*) from board where title like '%${_parameter}%'
 			]]>
 		</otherwise>
 	</choose>
 	</select>
+	
+	<select id="findAll" resultType="boardvo">
+		<![CDATA[
+		select b.no as no, b.title as title, b.hit as hit, a.name as userName, date_format(reg_date, '%Y-%m-%d %H:%i:%s') as regDate, b.user_no as userNo, b.o_no as orderNo, b.depth as depth from user a, board b where a.no = b.user_no order by b.g_no desc, b.o_no asc
+		]]>
+	</select>
+	
+	<delete id="delete" parameterType="long">
+		<![CDATA[
+		delete from board where no = #{_parameter}
+		]]>
+	</delete>
+	
+	<select id="findByNo" parameterType="long" resultType="boardvo">
+		<![CDATA[
+		select no, title, contents, user_no as userNo, hit, g_no as groupNo, o_no as orderNo, depth from board where no = #{_parameter}
+		]]>
+	</select>
+	
+	<update id="update" parameterType="boardvo">
+		<![CDATA[
+		update board set title = #{title}, contents = #{contents} where no = #{no}
+		]]>			
+	</update>
+	
+	<update id="updateHit" parameterType="map">
+		<![CDATA[
+		update board set hit = #{hit} where no = #{no}
+		]]>			
+	</update>
+	
+	<update id="updateBeforeAdd" parameterType="map">
+		<![CDATA[
+		update board set o_no = (o_no + 1) where o_no > #{orderNo} and g_no = #{groupNo}
+		]]>	
+	</update>
+
+	<insert id="insert" parameterType="boardvo">
+
+	<choose>
+		<when test="groupNo == null and orderNo() == null and depth() == null">
+		<![CDATA[
+		insert into board values(null, #{title}, #{contents}, 0, (select ifnull(max(g_no) + 1, 1) from board a) , 1, 1 , now(), #{userNo})
+		]]>
+		</when>
+		<otherwise>
+		<![CDATA[
+		insert into board values(null, #{title}, #{contents}, 0, #{groupNo}, #{orderNo}, #{depth}, now(), #{userNo})
+		]]>
+		</otherwise>
+	</choose>
+	</insert>
+	
+	<select id="findKwd" parameterType="map" resultType="boardvo" >
+		<![CDATA[
+		select b.no as no, b.title as title, b.hit as hit
+		, a.name as userName, date_format(reg_date, '%Y-%m-%d %H:%i:%s') as regDate
+		, b.user_no as userNo, b.o_no as orderNo, b.depth as depth
+		 from user a, board b where a.no = b.user_no and b.title like '%${keyword}%' order by b.g_no desc, b.o_no asc limit #{offset}, #{limit}
+		]]>
+	</select>
+	
 </mapper>

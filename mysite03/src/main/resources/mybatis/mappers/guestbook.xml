@@ -19,5 +19,16 @@
 		]]>
 	</select>
 
-
+	<select id="cntAll" resultType="long">
+	<![CDATA[
+	select count(*) from guestbook	
+	]]>
+	</select>
+	
+	<delete id="delete" parameterType="map" >
+	<![CDATA[
+	delete from guestbook where no = #{no} and password = #{password}
+	]]>
+	</delete>
+	
 </mapper>

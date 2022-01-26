@@ -22,8 +22,10 @@ public class BoardService {
 			vo.setOrderNo(boardVo.getOrderNo());
 			vo.setDepth(boardVo.getDepth());
 			boardRepository.updateBeforeAdd(vo.getGroupNo(), vo.getOrderNo());
+			vo.setOrderNo(boardVo.getOrderNo() + 1);
+			vo.setDepth(boardVo.getDepth() + 1);
 		}
-		return boardRepository.insert(vo);
+		return 1 == boardRepository.insert(vo);
 	}
 
 	// 글보기
@@ -32,7 +34,7 @@ public class BoardService {
 		BoardVo boardVo = boardRepository.findByNo(no);
 		
 		if(boardVo != null) {
-			boardRepository.updateHit(boardVo.getHit(), no);
+			boardRepository.updateHit(boardVo.getHit() + 1, no);
 		}
 		
 		return boardVo;
@@ -49,24 +51,23 @@ public class BoardService {
 
 	// 글 수정
 	public Boolean updateContents(BoardVo boardVo) {
-		return boardRepository.update(boardVo.getTitle(), boardVo.getContents(), boardVo.getNo());
+		return boardRepository.update(boardVo);
 	}
 
 	// 글 삭제
 	public Boolean deleteContents(Long boardNo, Long userNo) {
-		Boolean result = false;
 		BoardVo vo = boardRepository.findByNo(boardNo);
 		if (vo.getUserNo() == userNo) {
-			result = boardRepository.delete(boardNo);
+			return 1 == boardRepository.delete(boardNo);
 		}
-		return result;
+		return false;
 	}
 
 	// 글 리스트(찾기 결과와도 동일)
 	public Map<String, Object> getContentsList(int currentPage, String keyword) {
 		Map<String, Object> map = new HashMap<>();
 
-		int limit = 10;
+		Integer limit = 10;
 		int pageShow = 10;
 		int boardCount = boardRepository.boardCnt(keyword);
 		int pageCount = boardCount / limit;
@@ -87,7 +88,8 @@ public class BoardService {
 			prePage = currentPage - 1;
 		}
 		int pageDevideCount = (currentPage - 1) / pageShow;
-
+		Integer offset = (currentPage - 1) * limit;
+		
 		map.put("currentPage", currentPage);
 		map.put("boardCount", boardCount);
 		map.put("pageCount", pageCount);
@@ -97,7 +99,7 @@ public class BoardService {
 		map.put("pageDevide", limit);
 		map.put("pageDevideCount", pageDevideCount);
 		map.put("keyword", keyword);
-		map.put("list", boardRepository.findKwd(keyword, (currentPage - 1) * limit, limit));
+		map.put("list", boardRepository.findKwd(keyword, offset , limit));
 
 		return map;
 	}

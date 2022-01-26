@@ -29,9 +29,7 @@ public class BoardController {
 			@RequestParam(value = "currentPage", required = true, defaultValue = "1") int currentPage,
 			@RequestParam(value = "keyword", required = true, defaultValue = "") String keyword) {
 		Map<String, Object> map = boardService.getContentsList(currentPage, keyword);
-
 		model.addAllAttributes(map);
-
 		return "board/list";
 	}
 
@@ -44,7 +42,6 @@ public class BoardController {
 		if (authUser == null) {
 			return "redirect:/";
 		}
-
 		boardService.deleteContents(boardNo, authUser.getNo());
 		return "redirect:/board?currentPage=" + page + "&keyword=" + WebUtil.encodeURL(keyword, "UTF-8");
 	}
@@ -101,7 +98,7 @@ public class BoardController {
 			return "redirect:/";
 		}
 		boardVo.setUserNo(authUser.getNo());
-		Boolean result = boardService.updateContents(boardVo);
+		boardService.updateContents(boardVo);
 		return "redirect:/board";
 	}
 
@@ -128,5 +125,4 @@ public class BoardController {
 		Boolean result = boardService.addContents(boardVo);
 		return "redirect:/board";
 	}
-
 }
