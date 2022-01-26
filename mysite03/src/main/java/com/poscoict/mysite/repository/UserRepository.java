@@ -16,7 +16,6 @@ public class UserRepository {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	
 	public boolean insert(UserVo vo) {
 		// sql문의 ID
 		int count = sqlSession.insert("user.insert", vo);

@@ -3,6 +3,8 @@ package com.poscoict.mysite.exception;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import org.apache.ibatis.logging.Log;
+import org.apache.ibatis.logging.LogFactory;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+	private static final Log LOGGER = LogFactory.getLog(GlobalExceptionHandler.class);
+	
 	@ExceptionHandler(Exception.class)
 	public String ExceptionHandler(Model model, Exception e) {
 		// 1. 로깅
@@ -21,7 +25,7 @@ public class GlobalExceptionHandler {
 		StringWriter errors = new StringWriter();
 		e.printStackTrace(new PrintWriter(errors));
 		// 추후 로깅을 위함
-		System.out.println(errors.toString()); 
+		LOGGER.error(errors.toString()); 
 		
 		// 화면에 뿌리던 내용 다 가진 상태
 		model.addAttribute("exception", errors.toString());
