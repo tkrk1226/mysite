@@ -74,22 +74,24 @@ public class BoardService {
 		if (boardCount % limit >= 1) {
 			pageCount++;
 		}
-		if (currentPage > pageCount) {
+		if (currentPage > pageCount && pageCount > 0) {
 			currentPage = pageCount;
-		} else if (currentPage < 0) {
+		} else if (currentPage <= 0) {
 			currentPage = 1;
 		}
 		int nextPage = -1;
 		int prePage = -1;
-		if (currentPage != pageCount) {
+
+		if (currentPage != pageCount && pageCount != 0) {
 			nextPage = currentPage + 1;
 		}
-		if (currentPage != 1) {
+		if (currentPage != 1 && pageCount != 0) {
 			prePage = currentPage - 1;
 		}
+
 		int pageDevideCount = (currentPage - 1) / pageShow;
 		Integer offset = (currentPage - 1) * limit;
-		
+
 		map.put("currentPage", currentPage);
 		map.put("boardCount", boardCount);
 		map.put("pageCount", pageCount);
@@ -100,7 +102,7 @@ public class BoardService {
 		map.put("pageDevideCount", pageDevideCount);
 		map.put("keyword", keyword);
 		map.put("list", boardRepository.findKwd(keyword, offset , limit));
-
+		
 		return map;
 	}
 

@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Sorry...</title>
 </head>
 <body>
 	<h1>Exception Occurs!!!</h1>

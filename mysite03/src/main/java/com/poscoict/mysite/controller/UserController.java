@@ -1,7 +1,5 @@
 package com.poscoict.mysite.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,13 +50,8 @@ public class UserController {
 	
 	@Auth
 	@RequestMapping(value="/update", method = RequestMethod.POST)
-	public String update(HttpSession session, UserVo userVo) {
-		/* access controller */
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser == null) {
-			return "redirect:/";
-		}
-		
+	public String update(@AuthUser UserVo authUser, UserVo userVo) {
+
 		userVo.setNo(authUser.getNo());
 		userService.updateUser(userVo);
 		authUser.setName(userVo.getName());

@@ -34,13 +34,13 @@
 				</table>
 				<div class="bottom">
 					<c:if test="${boardVo.userNo eq authUser.no}">
-					<a href="${ pageContext.request.contextPath }/board/delete/${boardVo.no}">글삭제</a>
-					<a href="${ pageContext.request.contextPath }/board/update/${boardVo.no}">글수정</a>
+					<a href="${ pageContext.request.contextPath }/board/delete/${boardVo.no}?currentPage=${param.currentPage}&keyword=${param.keyword}">글삭제</a>
+					<a href="${ pageContext.request.contextPath }/board/update/${boardVo.no}?currentPage=${param.currentPage}&keyword=${param.keyword}">글수정</a>
 					</c:if>
 					<c:if test="${not empty authUser}">
-					<a href="${ pageContext.request.contextPath }/board/add/${boardVo.no}">답글작성</a>
+					<a href="${ pageContext.request.contextPath }/board/add/${boardVo.no}?currentPage=${param.currentPage}&keyword=${param.keyword}">답글작성</a>
 					</c:if>
-					<a href="${ pageContext.request.contextPath }/board">글목록</a>
+					<a href="${ pageContext.request.contextPath }/board?currentPage=${param.currentPage}&keyword=${param.keyword}">글목록</a>
 				</div>
 			</div>
 		</div>

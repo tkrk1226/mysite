@@ -2,8 +2,6 @@ package com.poscoict.mysite.controller;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +26,7 @@ public class BoardController {
 
 	@RequestMapping("")
 	public String index(Model model,
-			@RequestParam(value = "currentPage", required = true, defaultValue = "1") int currentPage,
+			@RequestParam(value = "currentPage", required = true, defaultValue = "1") Integer currentPage,
 			@RequestParam(value = "keyword", required = true, defaultValue = "") String keyword) {
 		Map<String, Object> map = boardService.getContentsList(currentPage, keyword);
 		model.addAllAttributes(map);
@@ -38,11 +36,10 @@ public class BoardController {
 	@Auth
 	@RequestMapping("/delete/{no}")
 	public String delete(@AuthUser UserVo authUser, @PathVariable("no") Long boardNo,
-			@RequestParam(value = "currentPage", required = true, defaultValue = "1") Integer page,
+			@RequestParam(value = "currentPage", required = true, defaultValue = "1") Integer currentPage,
 			@RequestParam(value = "keyword", required = true, defaultValue = "") String keyword) {
-
 		boardService.deleteContents(boardNo, authUser.getNo());
-		return "redirect:/board?currentPage=" + page + "&keyword=" + WebUtil.encodeURL(keyword, "UTF-8");
+		return "redirect:/board?currentPage=" + currentPage + "&keyword=" + WebUtil.encodeURL(keyword, "UTF-8");
 	}
 
 	@Auth
@@ -53,10 +50,12 @@ public class BoardController {
 
 	@Auth
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String write(@AuthUser UserVo authUser, BoardVo boardVo) {
+	public String write(@AuthUser UserVo authUser, BoardVo boardVo,
+			@RequestParam(value = "currentPage", required = true, defaultValue = "1") Integer currentPage,
+			@RequestParam(value = "keyword", required = true, defaultValue = "") String keyword) {
 		boardVo.setUserNo(authUser.getNo());
 		boardService.addContents(boardVo);
-		return "redirect:/board";
+		return "redirect:/board?currentPage=" + currentPage + "&keyword=" + WebUtil.encodeURL(keyword, "UTF-8");
 	}
 
 	@RequestMapping(value = "/view/{no}")
@@ -66,54 +65,46 @@ public class BoardController {
 		return "board/view";
 	}
 
+	@Auth
 	@RequestMapping(value = "/update/{no}", method = RequestMethod.GET)
-	public String update(Model model, HttpSession session, @PathVariable("no") Long boardNo) {
-		/* access control */
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		if (authUser == null) {
-			return "redirect:/";
-		}
+	public String update(@AuthUser UserVo authUser, Model model, @PathVariable("no") Long boardNo,
+			@RequestParam(value = "currentPage", required = true, defaultValue = "1") Integer currentPage,
+			@RequestParam(value = "keyword", required = true, defaultValue = "") String keyword) {
+
 		BoardVo boardVo = boardService.getContents(boardNo, authUser.getNo());
-		if (boardVo == null) {
-			return "redirect:/board";
-		}
 		model.addAttribute("boardVo", boardVo);
 		return "board/update";
 	}
 
+	@Auth
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String update(HttpSession session, BoardVo boardVo) {
-		/* access control */
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		if (authUser == null) {
-			return "redirect:/";
-		}
+	public String update(@AuthUser UserVo authUser, BoardVo boardVo,
+			@RequestParam(value = "currentPage", required = true, defaultValue = "1") Integer currentPage,
+			@RequestParam(value = "keyword", required = true, defaultValue = "") String keyword) {
+
 		boardVo.setUserNo(authUser.getNo());
 		boardService.updateContents(boardVo);
-		return "redirect:/board";
+		System.out.println();
+		return "redirect:/board?currentPage=" + currentPage + "&keyword=" + WebUtil.encodeURL(keyword, "UTF-8");
 	}
 
+	@Auth
 	@RequestMapping(value = "/add/{no}", method = RequestMethod.GET)
-	public String add(Model model, HttpSession session, @PathVariable("no") Long boardNo) {
-		/* access control */
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		if (authUser == null) {
-			return "redirect:/";
-		}
+	public String add(@AuthUser UserVo authUser, Model model, @PathVariable("no") Long boardNo) {
+
 		BoardVo boardVo = boardService.getContents(boardNo);
 		model.addAttribute("boardVo", boardVo);
 		return "board/add";
 	}
 
+	@Auth
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String add(HttpSession session, BoardVo boardVo) {
-		/* access control */
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		if (authUser == null) {
-			return "redirect:/";
-		}
+	public String add(@AuthUser UserVo authUser, BoardVo boardVo,
+			@RequestParam(value = "currentPage", required = true, defaultValue = "1") Integer currentPage,
+			@RequestParam(value = "keyword", required = true, defaultValue = "") String keyword) {
+
 		boardVo.setUserNo(authUser.getNo());
-		Boolean result = boardService.addContents(boardVo);
-		return "redirect:/board";
+		boardService.addContents(boardVo);
+		return "redirect:/board?currentPage=" + currentPage + "&keyword=" + WebUtil.encodeURL(keyword, "UTF-8");
 	}
 }
