@@ -34,7 +34,7 @@
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="${ header.referer }?currentPage=${param.currentPage}&keyword=${param.keyword}">취소</a>
+						<a href="${ header.referer }">취소</a>
 						<input type="submit" value="수정">
 					</div>
 				</form>				
