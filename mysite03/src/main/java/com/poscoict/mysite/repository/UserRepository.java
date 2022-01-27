@@ -17,7 +17,6 @@ public class UserRepository {
 	private SqlSession sqlSession;
 	
 	public boolean insert(UserVo vo) {
-		// sql문의 ID
 		int count = sqlSession.insert("user.insert", vo);
 		return count == 1;
 	}
@@ -27,15 +26,16 @@ public class UserRepository {
 		return count == 1;
 	}
 	
-	public UserVo findByEmailAndPassword(String email, String password) throws UserRepositoryException {
-		// 처음에는 null 이었지만 select에 있다면 제대로 된 객체를 반환하도록
-		Map<String, String> map = new HashMap<>();
-		map.put("e", email);
-		map.put("p", password);
-		return sqlSession.selectOne("user.findByEmailAndPassword", map);
-	}
-
 	public UserVo findByNo(Long userNo) {
 		return sqlSession.selectOne("user.findByNo", userNo);
 	}
+	
+	public UserVo findByEmailAndPassword(String email, String password) throws UserRepositoryException {
+		Map<String, String> map = new HashMap<>();
+		map.put("e", email);
+		map.put("p", password);
+		UserVo vo = sqlSession.selectOne("user.findByEmailAndPassword", map);
+		return vo;
+	}
+
 }
