@@ -11,7 +11,7 @@
 		</when>
 		<otherwise>
 			<![CDATA[
-			select count(*) from board where title like '%${_parameter}%'
+			select count(*) from board where title like '%${_parameter}%' or contents like '%${_parameter}%'
 			]]>
 		</otherwise>
 	</choose>
@@ -74,7 +74,7 @@
 		select b.no as no, b.title as title, b.hit as hit
 		, a.name as userName, date_format(reg_date, '%Y-%m-%d %H:%i:%s') as regDate
 		, b.user_no as userNo, b.o_no as orderNo, b.depth as depth
-		 from user a, board b where a.no = b.user_no and b.title like '%${keyword}%' order by b.g_no desc, b.o_no asc limit #{offset}, #{limit}
+		 from user a, board b where a.no = b.user_no and (b.title like '%${keyword}%' or b.contents like '%${keyword}%') order by b.g_no desc, b.o_no asc limit #{offset}, #{limit}
 		]]>
 	</select>
 	
