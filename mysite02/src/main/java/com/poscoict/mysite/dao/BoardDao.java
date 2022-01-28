@@ -18,10 +18,10 @@ public class BoardDao {
 		
 		try {
 			//1. JDBC 드라이버 로딩
-			Class.forName("com.mysql.cj.jdbc.Driver"); // Web에서 쓸 때는 필요하다. (JDBC만 할 때는 괜찮음)
+			Class.forName("org.mariadb.jdbc.Driver"); // Web에서 쓸 때는 필요하다. (JDBC만 할 때는 괜찮음)
 			
 			//2. 연결하기
-			String url = "jdbc:mysql://localhost:3306/webdb?characterEncoding=UTF-8&serverTimezone=UTC";
+			String url = "jdbc:mysql://192.168.0.83:3307/webdb?characterEncoding=UTF-8&serverTimezone=UTC";
 			conn = DriverManager.getConnection(url, "webdb", "webdb");		
 		} catch(ClassNotFoundException e) {
 			System.out.print("드라이버 로딩 실패 : " + e); // e.getMessage()
