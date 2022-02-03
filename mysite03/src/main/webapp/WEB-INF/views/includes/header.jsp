@@ -5,7 +5,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <div id="header">
-	<h1>MySite</h1>
+	<h1>${siteVo.title}</h1>
 	<ul>
 		<c:choose>
 			<c:when test="${ empty authUser }">
@@ -17,6 +17,7 @@
 				<li>
 			</c:when>
 			<c:otherwise>
+			
 				<li><a
 					href="${ pageContext.request.contextPath }/user/update">회원정보수정</a>
 				<li>

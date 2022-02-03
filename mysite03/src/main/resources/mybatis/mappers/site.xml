@@ -21,7 +21,7 @@
 	
 	<select id="findSite" resultType="sitevo">
 		<![CDATA[
-		select no, title, welcome, profile, description from site where no = 1		
+		select title, welcome, profile, description from site where no = 1		
 		]]>
 	</select>	
 </mapper>
