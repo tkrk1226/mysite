@@ -32,8 +32,8 @@ public class AdminController {
 	
 	@RequestMapping(value={"", "/main"}, method=RequestMethod.GET)
 	public String main(Model model) {
-		SiteVo vo = siteService.getSite();
-		model.addAttribute("siteVo", vo);
+//		SiteVo vo = siteService.getSite();
+//		model.addAttribute("siteVo", vo);
 		return "admin/main";
 	}	
 
