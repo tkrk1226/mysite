@@ -34,7 +34,7 @@
 			<mvc:mapping path="/user/logout"/>
 			<bean class="com.poscoict.mysite.security.LogoutInterceptor" />
 		</mvc:interceptor>
-		
+				
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
 			<mvc:exclude-mapping path="/user/auth"/>
