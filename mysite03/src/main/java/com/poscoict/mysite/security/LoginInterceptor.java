@@ -18,7 +18,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-
+		
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		
@@ -29,7 +29,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			request.setAttribute("email", email);
 			// viewResolver가 작동하는 공간이 아니다. , URI
 			request
-			.getRequestDispatcher("/WEB-INF/views/main.login.jsp")
+			.getRequestDispatcher("/WEB-INF/views/user/login.jsp")
 			.forward(request, response);
 			return false;
 		}
