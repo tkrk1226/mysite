@@ -38,6 +38,10 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		if(auth == null) {
 			return true;
 		}
+
+		// auth 가져오기
+		String getAuth = auth.role();
+		System.out.println("getAuth : " + getAuth);
 		
 		// 5. @Auth가 적용이 되어 있기 때문에 인증(Authentication) 여부 확인
 		HttpSession session = request.getSession();
@@ -51,7 +55,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 			response.sendRedirect(request.getContextPath() + "/user/login");
 			return false;
 		}
-
+		
 		// 6. 인증 확인!!! , Controller의 handler(method) 실행
 		return true;
 	}
