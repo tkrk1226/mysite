@@ -14,7 +14,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-
+		
 		// 1. handler 종류 확인
 		if (handler instanceof HandlerMethod == false) {
 			return true; // css, ... 등은 검사할 필요 없이 그냥 지나가게
@@ -30,9 +30,9 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		Auth auth = handlerMethod.getMethodAnnotation(Auth.class);		
 		
 		// 4. Handler Method @Auth가 없다면 Type에 있는지 확인(과제)
-//		if(auth == null) {
-//			auth = handlerMethod.getBeanType().getAnnotation(Auth.class);
-//		}
+		if(auth == null) {
+			auth = handlerMethod.getBeanType().getAnnotation(Auth.class);
+		}
 		
 		//5. type과 method에 @Auth 가 적용이 안되어 있는 경우
 		if(auth == null) {
