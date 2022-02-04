@@ -12,7 +12,7 @@ import com.poscoict.mysite.security.Auth;
 import com.poscoict.mysite.service.SiteService;
 import com.poscoict.mysite.vo.SiteVo;
 
-//@Auth
+//@Auth 주석을 넣으면 handler에서 프리패스함
 @Auth(role="ADMIN")
 @Controller
 @RequestMapping("/admin")

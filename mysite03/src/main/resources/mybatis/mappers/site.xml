@@ -5,7 +5,7 @@
 	<update id="update" parameterType="sitevo">
 	
 		<choose>
-			<when test="profile == null">
+			<when test="profile == null or '' == profile">
 			<![CDATA[
 			update site set title=#{title}, welcome=#{welcome}, description=#{description} where no = 1;
 			]]>
