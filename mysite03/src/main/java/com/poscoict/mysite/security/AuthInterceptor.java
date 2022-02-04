@@ -31,7 +31,11 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
 		// 4. Handler Method @Auth가 없다면 Type에 있는지 확인(과제)
 		if (auth == null) {
-			auth = handlerMethod.getBeanType().getAnnotation(Auth.class);
+//			auth = handlerMethod.getBeanType().getAnnotation(Auth.class);
+			auth = handlerMethod
+					.getMethod()
+					.getDeclaringClass()
+					.getAnnotation(Auth.class);
 		}
 
 		// 5. type과 method에 @Auth 가 적용이 안되어 있는 경우
@@ -56,12 +60,12 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 			return false;
 		}
 
-		if ("ADMIN".equals(auth.role())) {
-			if (!"ADMIN".equals(authUser.getRole())) {
-				response.sendRedirect(request.getContextPath());
-				return false;
-			}
-		}
+//		if ("ADMIN".equals(auth.role())) {
+//			if (!"ADMIN".equals(authUser.getRole())) {
+//				response.sendRedirect(request.getContextPath());
+//				return false;
+//			}
+//		}
 		
 //		if("ADMIN".equals(authUser.getRole())) {
 //			return true;
@@ -71,8 +75,24 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 //			response.sendRedirect(request.getContextPath());
 //			return false;
 //		}
+		
+//		 7. 권한(Authorization) 체크를 위해서 @Auth의 role 가져오기("USER", "ADMIN")
+		String role = auth.role();
+		
+//		 8. @Auth의 role이 "USER" 인 경우, authUser의 role은 상관이 없다.
+		if ("USER".equals(role)) {
+			return true;
+		}
+		
+//		 9. @Auth의 role이 "ADMIN" 인 경우, authUser은 "ADMIN" 이어야 한다.
+		if("ADMIN".equals(authUser.getRole()) == false) {
+			response.sendRedirect(request.getContextPath());
+			return false;
+		}
 
-		// 6. 인증 확인!!! , Controller의 handler(method) 실행
+//		 10. 옳은 관리자
+//		 @Auth의 role : "ADMIN"
+//	     authUser의 role : "ADMIN" 
 		return true;
 	}
 }
