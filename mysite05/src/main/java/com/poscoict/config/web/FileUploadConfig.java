@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
-@PropertySource("classpath:com/poscoict/mysite/config/web/fileupload.properties")
+@PropertySource({"classpath:com/poscoict/mysite/config/web/fileupload.properties", "classpath:com/poscoict/mysite/config/web/assets.properties"})
 public class FileUploadConfig extends WebMvcConfigurerAdapter {
 
 	@Autowired
@@ -33,6 +33,11 @@ public class FileUploadConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler(env.getProperty("fileupload.resourceMapping"))
-		.addResourceLocations("file:" + env.getProperty("fileupload.uploadLocation"));
+		.addResourceLocations("file:" + env.getProperty("fileupload.uploadLocation"));		
+		
+		registry.addResourceHandler(env.getProperty("assets.resourceMapping"))
+		.addResourceLocations("classpath:" + env.getProperty("assets.resourceLocation"))
+		.setCachePeriod(60 * 60 * 24 * 365);
+		
 	}
 }
