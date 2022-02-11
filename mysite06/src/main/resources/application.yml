@@ -39,7 +39,7 @@ spring:
 # dev profile : spring boot configuration
 spring:
    config:
-      active:
+      activate:
          on-profile: dev
 
    #datasource
@@ -57,15 +57,15 @@ spring:
 # production profile : spring boot configuration
 spring:
    config:
-      active:
+      activate:
          on-profile: production
 
    #datasource
    datasource:
       driver-class-name: org.mariadb.jdbc.Driver
       url: jdbc:mysql://192.168.0.83:3307/webdb?characterEncoding=UTF-8&serverTimezone=UTC
-      username: webdb
-      password: webdb
+      username: block
+      password: block
       hikari:
          minimum-idle: 10
          maximum-pool-size: 20
