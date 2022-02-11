@@ -14,12 +14,25 @@ spring:
    # mvc
    mvc:
       view:
-         prefix: /WEB-INF/views
+         prefix: /WEB-INF/views/
          suffix: .jsp
 
-   # 
+   # message resource (I18n, Internationalization)
+   messages:
+      always-message-format: true
+      basename: messages/messages_ko
+      encoding: UTF-8
 
+   # multi part
+   multipart:
+      enabled: true   
+      max-file-size: 50MB
+      max-request-size: 50MB
 
+   # aop(@EnableAspectJAutoProxy)
+   aop:
+      auto: true
+      proxy-target-class: false
 
 ---
 
@@ -51,8 +64,8 @@ spring:
    datasource:
       driver-class-name: org.mariadb.jdbc.Driver
       url: jdbc:mysql://192.168.0.83:3307/webdb?characterEncoding=UTF-8&serverTimezone=UTC
-      username: block
-      password: block
+      username: webdb
+      password: webdb
       hikari:
          minimum-idle: 10
          maximum-pool-size: 20
@@ -71,19 +84,14 @@ server:
          force-request: false
          force-response: false
 
-
-
 ---
 
 # mybatis
 mybatis:
-   config-location:classpath:mybatis/configuration.xml
+   config-location: classpath:mybatis/configuration.xml
 
 ---
 
 # logging
-
-
-
-
-
+logging:
+   config: classpath:logback.xml
