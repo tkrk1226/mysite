@@ -1,7 +1,13 @@
 @charset "UTF-8";
 @import "mysite.css";
 
-#gallery			{ margin:20px auto;	width:540px;}
+#gallery			{ margin:20px auto;	width:540px; }
+
+#gallery {
+	display: block;
+    content: "";
+    clear: both;
+}
 
 #upload-image {
 	display: block;
@@ -36,6 +42,12 @@
 	left: 2.5%;
 	width: 100%; 
 	padding-top: 10px;
+}
+
+#gallery ul:after {
+	display: block;
+    content: "";
+    clear: both;
 }
 
 #gallery ul li {
