@@ -83,6 +83,9 @@ server:
          force: false
          force-request: false
          force-response: false
+   error:
+      whitelabel:
+         enabled: false
 
 ---
 
