@@ -3,8 +3,6 @@
 
 #gallery			{ margin:20px auto;	width:540px;}
 
-div#content { margin: 0px 0px 4px 0px;}
-
 #upload-image {
 	display: block;
 	float: right;
@@ -37,34 +35,37 @@ div#content { margin: 0px 0px 4px 0px;}
 	position: relative;
 	left: 2.5%;
 	width: 100%; 
-	padding: 4px 0px;
+	padding-top: 10px;
 }
 
 #gallery ul li {
 	position:relative;
 	float:left; 
 	overflow-y:hidden;
-	padding: 4px;
+	padding-bottom: 10px;
+	padding-right: 10px;
+	
 }
 
 #gallery ul li a.image {
 	display:block;
-	border: 1px solid #999;
-	padding: 1px;
+	outline: 2px solid #999;	
+	border: 2px solid #bbb;
 	width:114px;
 	height:114px;
 	font-size:0px;
 	background-size: 114px;
 	background-repeat: no-repeat;
-	background-position: center center;
-	background-color: #ddd;
+	background-position: 50%;
+	background-color:#ccc;
+	margin: 2px;
 }
 
 #gallery ul li a.del-button {
 	display:none;
 	position:absolute;
-	right:12px;
-	top:8px;
+	right:14px;
+	top:4px;
 	width:15px;
 	height:15px;
 	font-size:0px;
