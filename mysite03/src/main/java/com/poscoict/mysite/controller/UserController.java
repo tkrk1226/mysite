@@ -43,7 +43,8 @@ public class UserController {
 			return "user/join";
 		}
 		
-		userService.join(vo);
+		// 제대로 들어가는지 확인 후 주석 없애기
+//		userService.join(vo);
 		return "redirect:/user/joinsuccess";
 	}
 	
