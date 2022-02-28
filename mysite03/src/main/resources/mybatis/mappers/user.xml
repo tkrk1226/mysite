@@ -16,6 +16,12 @@
 		<!-- #{no} 가 아니라 아무이름을 넣어도 상관없음, 그러나 의미있는걸로 -->
 	</select>
 
+	<select id="findByEmail" parameterType="string" resultType="uservo">
+		<![CDATA[
+		select no from user where email=#{email }
+		]]>
+	</select>
+
 	<insert id="insert" parameterType="uservo">
 		<![CDATA[
 		insert into user values(null, #{name},

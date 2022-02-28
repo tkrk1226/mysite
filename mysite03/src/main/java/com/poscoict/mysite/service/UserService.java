@@ -24,9 +24,11 @@ public class UserService {
 	}
 
 	public void updateUser(UserVo userVo) {
-
 		userRepository.update(userVo);
-		
+	}
+
+	public UserVo getUser(String email) {
+		return userRepository.findByEmail(email);
 	}
 	
 }

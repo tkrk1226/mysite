@@ -12,8 +12,8 @@
 
 	<properties>
 		<org.springframework-version>4.3.4.RELEASE</org.springframework-version>
-		<jcloverslf4j.version>1.7.6</jcloverslf4j.version>
-		<logback.version>1.1.1</logback.version>
+    	<jcloverslf4j.version>1.7.6</jcloverslf4j.version>		
+    	<logback.version>1.1.1</logback.version>		
 	</properties>
 
 	<dependencies>
@@ -24,11 +24,11 @@
 			<version>${org.springframework-version}</version>
 			<!-- JCL 제외 -->
 			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
+			   <exclusion>
+				  <groupId>commons-logging</groupId>
+				  <artifactId>commons-logging</artifactId>
+			   </exclusion>
+			</exclusions>			
 		</dependency>
 
 		<!-- Spring MVC -->
@@ -37,7 +37,7 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-
+		
 		<!-- Spring Web -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -47,12 +47,24 @@
 
 		<!-- Spring Aspect -->
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aspects</artifactId>
-			<version>${org.springframework-version}</version>
+		    	<groupId>org.springframework</groupId>
+		    	<artifactId>spring-aspects</artifactId>
+		    	<version>${org.springframework-version}</version>
 		</dependency>
 
-		<!-- Spring jdbc -->
+		<!-- validation -->
+		<dependency>
+		    <groupId>javax.validation</groupId>
+		    <artifactId>validation-api</artifactId>
+		    <version>2.0.1.Final</version>
+		</dependency>
+		<dependency>
+		   <groupId>org.hibernate</groupId>
+		   <artifactId>hibernate-validator</artifactId>
+		   <version>6.1.0.Final</version>
+		</dependency>
+				
+		<!-- Spring JDBC -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
@@ -70,35 +82,29 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>1.2.0</version>
 		</dependency>
-
+		
 		<!-- Common DBCP -->
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
 			<version>1.4</version>
 		</dependency>
-
+		
 		<!-- MariaDB JDBC Driver -->
 		<dependency>
-			<groupId>org.mariadb.jdbc</groupId>
-			<artifactId>mariadb-java-client</artifactId>
-			<version>2.7.4</version>
+		    <groupId>org.mariadb.jdbc</groupId>
+		    <artifactId>mariadb-java-client</artifactId>
+		    <version>2.7.4</version>
 		</dependency>
 
-		<!-- validation -->
+		<!-- jackson -->
 		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-			<version>2.0.1.Final</version>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.8</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>6.1.0.Final</version>
-		</dependency>
-
-		<!-- Common fileupload -->
+		
+		<!-- Common Fileupload -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
@@ -109,14 +115,26 @@
 			<artifactId>commons-io</artifactId>
 			<version>1.4</version>
 		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
+		
+		<!-- JSTL -->	
 		<dependency>
-			<groupId>jstl</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
+		    <groupId>jstl</groupId>
+		    <artifactId>jstl</artifactId>
+		    <version>1.2</version>
 		</dependency>
-
+				
+		<!-- Logback --> 
+		<dependency>                                    
+			<groupId>org.slf4j</groupId>                
+			<artifactId>jcl-over-slf4j</artifactId>     
+			<version>${jcloverslf4j.version}</version>  
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+			
 		<!-- servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -129,20 +147,7 @@
 			<artifactId>jsp-api</artifactId>
 			<version>2.0</version>
 			<scope>provided</scope>
-		</dependency>
-
-		<!-- Logback -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-			<version>${jcloverslf4j.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>${logback.version}</version>
-		</dependency>
-
+		</dependency>				
 	</dependencies>
 
 	<build>
@@ -158,7 +163,7 @@
 					<username>admin</username>
 					<password>manager</password>
 				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+			</plugin>	
+		</plugins>		
+	</build>	
 </project>
