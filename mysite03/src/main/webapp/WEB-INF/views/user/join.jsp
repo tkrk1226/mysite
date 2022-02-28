@@ -25,19 +25,23 @@ $(function(){
 		}
 		
 		// 2. 이메일 유효성(empty) 체크
-	
-		
-		
+		if($("#email").val() === ''){
+			alert('이메일이 비어 있습니다.');
+			$("#email").focus();
+			return;
+		}
 		
 		// 3. 중복체크 유무 *** (hide, show 여부 확인)
-		
-		
-		
+		if($("#img-checkemail").css('display') == 'none'){
+			alert('중복체크를 해주세요.');
+		};
 		
 		// 4. 비밀번호 유효성 체크
-		
-		
-		
+		if($("#password").val() === ''){
+			alert('비밀번호가 비어 있습니다.');
+			$("#password").focus();
+			return;
+		}
 		
 		// 5. 유효성 OK
 		console.log("OK!!!");
