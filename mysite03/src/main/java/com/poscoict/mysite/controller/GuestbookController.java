@@ -33,6 +33,11 @@ public class GuestbookController {
 	@RequestMapping("/add")
 	public String add(GuestbookVo vo) {
 		guestbookService.addMessage(vo);
+
+		System.out.println("-------------------------------------");
+		System.out.println(vo);
+		System.out.println("-------------------------------------");
+		
 		return "redirect:/guestbook";
 	}
 	

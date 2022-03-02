@@ -25,5 +25,9 @@ public class GuestbookService {
 	public Boolean addMessage(GuestbookVo vo) {
 		return 1 == guestbookRepository.insert(vo);
 	}
+
+	public List<GuestbookVo> findAll(Long no) {
+		return guestbookRepository.scroll(no);
+	}
 	
 }

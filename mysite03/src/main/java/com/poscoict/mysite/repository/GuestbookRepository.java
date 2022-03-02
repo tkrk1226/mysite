@@ -34,4 +34,8 @@ public class GuestbookRepository {
 		map.put("password", password);
 		return sqlSession.delete("guestbook.delete", map);
 	}
+
+	public List<GuestbookVo> scroll(Long no) {
+		return sqlSession.selectList("guestbook.scroll", no);
+	}
 }

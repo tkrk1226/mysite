@@ -15,8 +15,23 @@
 
 	<select id="findAll" resultType="guestbookvo" >
 		<![CDATA[
-		select no, name, password , date_format(reg_date, '%Y/%m/%d %H:%i:%s') as regDate, message from guestbook order by reg_date desc
+		select no, name , date_format(reg_date, '%Y/%m/%d %H:%i:%s') as regDate, message from guestbook order by reg_date desc
 		]]>
+	</select>
+
+	<select id="scroll" parameterType="long" resultType="guestbookvo" >
+		<choose>
+			<when test="_parameter == -1">
+				<![CDATA[
+				select no, name, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as regDate, message from guestbook order by reg_date desc limit 0, 3;
+				]]>	
+			</when>
+			<otherwise>
+				<![CDATA[
+				select no, name, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as regDate, message from guestbook where no < #{_parameter} order by reg_date desc limit 0, 3;
+				]]>				
+			</otherwise>
+		</choose>		
 	</select>
 
 	<select id="cntAll" resultType="long">
