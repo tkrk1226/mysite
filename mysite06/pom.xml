@@ -75,6 +75,12 @@
 			<artifactId>mariadb-java-client</artifactId>
 		</dependency>
 
+		<!-- jackson -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+
 		<!-- Common fileupload -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>
