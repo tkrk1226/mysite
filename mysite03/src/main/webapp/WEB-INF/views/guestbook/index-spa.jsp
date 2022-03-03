@@ -14,8 +14,11 @@
 <script type="text/javascript">
 
 var scrollCheck = false;
+var sn = -1;
 
 var render = function(vo) { 
+	
+	sn = vo.no;
 	
 	var html = 				
 	"<li data-no='"+ vo.no + "'>" + 
@@ -28,14 +31,16 @@ var render = function(vo) {
 	return html;	
 }
 
-var fetch = function(sn){	
+var fetch = function(){	
 	
 	// 처음 계산을 위함
-	var no = $("#list-guestbook li:last-child").length;
+	//var no = $("#list-guestbook li:last-child").length;
 	
-	if(no == 0){
-		sn = -1;
-	}
+	//if(no == 0){
+	//	sn = -1;
+	//}
+	
+	
 	
 	$.ajax({
 		url: '${pageContext.request.contextPath}/api/guestbook/list', //startNo
@@ -163,7 +168,7 @@ $(function(){
 		var documentHeight = $document.height(); 
 		var scrollTop = $window.scrollTop();
 
-		if(scrollTop + windowHeight + 1 > documentHeight) { // + 10 만큼 피드를 더 불러온다.
+		if(scrollTop + windowHeight + 15 > documentHeight) { // + 10 만큼 피드를 더 불러온다.
 			
 			//li:last-child
 			//$("#list-guestbook li:last-child")
@@ -173,13 +178,13 @@ $(function(){
 				return;
 			}
 		
-			var sn = $("#list-guestbook li:last-child").data("no");
+			//var sn = $("#list-guestbook li:last-child").data("no");
 			
-			console.log("---------scroll-----------");
-			console.log(sn);
-			console.log("---------scroll-----------");
+			//console.log("---------scroll-----------");
+			//console.log(sn);
+			//console.log("---------scroll-----------");
 			
-			fetch(sn);
+			fetch();
 			
 		}
 
